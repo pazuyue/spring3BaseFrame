@@ -6,3 +6,7 @@
 - 邮件服务实现
 - Logback 日志功能实现
 - JMH 压测包实现
+- Redis集成
+- MySQL-mybatis-plus集成
+- 数据库连接池pool2 集成
+- Cache 缓存集成
