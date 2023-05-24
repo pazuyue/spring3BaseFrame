@@ -1,6 +1,6 @@
 package com.example.springdemo;
 
-import com.example.springdemo.Entity.UserEntity;
+import com.example.springdemo.Pojo.User;
 import jakarta.annotation.Resource;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -26,12 +26,12 @@ public class SpringBootRedisApplicationTests {
 
     @Test
     public void testSerializable() {
-        UserEntity user=new UserEntity();
+        User user=new User();
         user.setId(1L);
-        user.setUserName("朝雾轻寒");
-        user.setUserSex('男');
+        user.setName("朝雾轻寒");
+        user.setAge(19);
         serializableRedisTemplate.opsForValue().set("user", user);
-        UserEntity user2 = (UserEntity) serializableRedisTemplate.opsForValue().get("user");
-        System.out.println("user:"+user2.getId()+","+user2.getUserName()+","+user2.getUserSex());
+        User user2 = (User) serializableRedisTemplate.opsForValue().get("user");
+        System.out.println("user:"+user2.getId()+","+user2.getName()+","+user2.getAge());
     }
 }

@@ -1,6 +1,6 @@
 package com.example.springdemo.Servlet;
 
-import com.example.springdemo.Entity.UserEntity;
+import com.example.springdemo.Pojo.User;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -43,11 +43,10 @@ public class TestServlet extends HttpServlet {
         System.out.println(sb);
 
         ObjectMapper om=new ObjectMapper();
-        UserEntity user=new UserEntity();
+        User user=new User();
         user.setId(1L);
-        user.setUserName("zwqh");
-        user.setUserSex('男');
-        user.setHeaders(sb.toString());
+        user.setName("zwqh");
+        user.setAge(18);
         String resultJson=om.writeValueAsString(user);
 
         resp.setContentType("application/json;charset=UTF-8");

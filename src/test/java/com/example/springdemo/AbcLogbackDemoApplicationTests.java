@@ -1,7 +1,7 @@
 package com.example.springdemo;
 
 import com.alibaba.fastjson2.JSON;
-import com.example.springdemo.Entity.UserEntity;
+import com.example.springdemo.Pojo.User;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.slf4j.Logger;
@@ -26,7 +26,7 @@ public class AbcLogbackDemoApplicationTests {
     public void logbackTest() {
         logger.info("进入logbackTest方法了！");
         try {
-            UserEntity user = new UserEntity(1L,"邓某",'男',"ces");
+            User user = new User(1L,"邓某",19,"284934551@qq.com");
             logger.info("employee对象的相应参数为:" + JSON.toJSONString(user));
             Long id = user.getId();
             logger.info("向表中插入employee对象的数据后,自动获取到的主键为:" + id);
