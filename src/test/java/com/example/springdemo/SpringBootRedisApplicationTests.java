@@ -27,7 +27,7 @@ public class SpringBootRedisApplicationTests {
     @Test
     public void testSerializable() {
         User user=new User();
-        user.setId(1L);
+        user.setId(1);
         user.setName("朝雾轻寒");
         user.setAge(19);
         serializableRedisTemplate.opsForValue().set("user", user);

@@ -1,8 +1,8 @@
-package com.example.springdemo.Servlet;
+package com.example.springdemo.Servlet.User;
 
 import com.example.springdemo.Mapper.UserMapper;
 import com.example.springdemo.Pojo.User;
-import com.example.springdemo.Servlet.IService.IUserService;
+import com.example.springdemo.Servlet.User.IService.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.Cacheable;
@@ -26,7 +26,7 @@ public class UserService implements IUserService {
 
     @Override
     @Cacheable(cacheNames = { "user" }, key = "#id")//如果缓存存在，直接读取缓存值；如果缓存不存在，则调用目标方法，并将结果放入缓存
-    public User getOne(Long id) {
+    public User getOne(Integer id) {
         User user = userMapper.selectById(id);
         return user;
     }

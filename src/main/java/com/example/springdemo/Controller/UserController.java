@@ -2,7 +2,7 @@ package com.example.springdemo.Controller;
 
 import com.example.springdemo.Interface.ControllerWebLog;
 import com.example.springdemo.Pojo.User;
-import com.example.springdemo.Servlet.UserService;
+import com.example.springdemo.Servlet.User.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +23,7 @@ public class UserController {
 
     @GetMapping("/getOne")
     @ControllerWebLog(name = "查询", intoDb = true)
-    public User getOne(Long id) {
+    public User getOne(Integer id) {
         return userService.getOne(id);
     }
 

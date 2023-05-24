@@ -1,4 +1,4 @@
-package com.example.springdemo.Servlet.IService;
+package com.example.springdemo.Servlet.User.IService;
 
 import com.example.springdemo.Pojo.User;
 
@@ -15,7 +15,7 @@ public interface IUserService {
      * @param id
      * @return
      */
-    User getOne(Long id);
+    User getOne(Integer id);
     /**
      * 新增用户
      * @param user

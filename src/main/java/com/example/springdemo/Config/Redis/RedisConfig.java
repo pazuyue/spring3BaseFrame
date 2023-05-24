@@ -1,4 +1,4 @@
-package com.example.springdemo.Config;
+package com.example.springdemo.Config.Redis;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -28,5 +28,4 @@ public class RedisConfig {
         redisTemplate.setConnectionFactory(connectionFactory);
         return redisTemplate;
     }
-
 }
