@@ -26,9 +26,9 @@ public class AbcLogbackDemoApplicationTests {
     public void logbackTest() {
         logger.info("进入logbackTest方法了！");
         try {
-            User user = new User(1L,"邓某",19,"284934551@qq.com");
+            User user = new User(1,"邓某",19,"284934551@qq.com");
             logger.info("employee对象的相应参数为:" + JSON.toJSONString(user));
-            Long id = user.getId();
+            Integer id = user.getId();
             logger.info("向表中插入employee对象的数据后,自动获取到的主键为:" + id);
         } catch (Exception e) {
             logger.error("出错咯！错误信息:" + e.getMessage(), e.getCause());

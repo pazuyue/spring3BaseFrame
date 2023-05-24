@@ -44,7 +44,7 @@ public class TestServlet extends HttpServlet {
 
         ObjectMapper om=new ObjectMapper();
         User user=new User();
-        user.setId(1L);
+        user.setId(1);
         user.setName("zwqh");
         user.setAge(18);
         String resultJson=om.writeValueAsString(user);

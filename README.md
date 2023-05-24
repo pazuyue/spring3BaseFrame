@@ -10,3 +10,4 @@
 - MySQL-mybatis-plus集成
 - 数据库连接池pool2 集成
 - Cache 缓存集成
+- Rabbitmq集成
