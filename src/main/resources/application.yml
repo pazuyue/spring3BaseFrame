@@ -1,0 +1,6 @@
+################ ◊‘∂®“Â≈‰÷√  ##############
+mq:
+  defaultExchange: amqpExchange
+  queue : yueguangQueue
+  routeKey : yueguangRouteKey
+

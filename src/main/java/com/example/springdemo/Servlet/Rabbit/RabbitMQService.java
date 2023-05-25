@@ -40,11 +40,6 @@ public class RabbitMQService {
                 object);
     }
 
-    @RabbitListener(queues = "${mq.queue}")
-    public void receive(String payload, Channel channel,
-                        @Header(AmqpHeaders.DELIVERY_TAG) long tag) {
-        LOGGER.info("消费内容为：{}", payload);
-        RabbitMQUtils.askMessage(channel, tag, LOGGER);
-    }
+
 }
 

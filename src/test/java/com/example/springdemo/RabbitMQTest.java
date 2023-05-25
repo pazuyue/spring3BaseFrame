@@ -15,15 +15,20 @@ import org.springframework.test.context.junit4.SpringRunner;
 @SpringBootTest(classes = { SpringDemoApplication.class })
 public class RabbitMQTest {
 
+    //@Autowired
+    //RabbitMQService rabbitMQService;
     @Autowired
-    RabbitMQService rabbitMQService;
+    private RabbitTemplate rabbitTemplate;
+
+    @Autowired
+    private MQProperties mqProperties;
 
     @Test
     public void testSendMessage() {
-       /* rabbitTemplate.convertAndSend(mqProperties.getDefaultExchange(),
+        rabbitTemplate.convertAndSend(mqProperties.getDefaultExchange(),
                 mqProperties.getRouteKey(), "发送了一条信息");
-*/
-        rabbitMQService.convertAndSend("TestQueue","发送了一条信息-测试多队列");
+
+        //rabbitMQService.convertAndSend("TestQueue","发送了一条信息-测试多队列");
 
     }
 }
