@@ -1,6 +1,5 @@
-################ ◊‘∂®“Â≈‰÷√  ##############
 mq:
   defaultExchange: amqpExchange
-  queue : yueguangQueue
-  routeKey : yueguangRouteKey
-
+  queueAndRouteKey:
+    yueguangRouteKey: yueguangQueue
+    caiyunRouteKey: caiyunQueue
