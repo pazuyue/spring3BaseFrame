@@ -5,6 +5,7 @@ import org.springframework.amqp.core.Queue;
 import org.springframework.amqp.rabbit.annotation.EnableRabbit;
 import org.springframework.amqp.rabbit.connection.CachingConnectionFactory;
 import org.springframework.amqp.rabbit.connection.ConnectionFactory;
+import org.springframework.amqp.rabbit.core.RabbitAdmin;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -12,6 +13,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Configuration
 @EnableRabbit
@@ -46,13 +48,6 @@ public class RabbitMQConfig {
     }
 
     @Bean
-    public DirectExchange defaultExchange() {
-        boolean durable = true;
-        boolean autoDelete = false;
-        return new DirectExchange(mqProperties.getDefaultExchange(), durable, autoDelete);
-    }
-
-    @Bean
     public Map<String,Queue> queues() {
         Map<String,Queue> queues = new HashMap<>();
         boolean durable = true;
@@ -67,29 +62,40 @@ public class RabbitMQConfig {
     }
 
     @Bean
-    public List<Binding> bindings() {
+    public DirectExchange defaultExchange() {
+        boolean durable = true;
+        boolean autoDelete = false;
+        return new DirectExchange(mqProperties.getDefaultExchange(), durable, autoDelete);
+    }
+
+    @Bean
+    public List<Binding> bindings(DirectExchange directExchange, Map<String,Queue> queues,RabbitAdmin rabbitAdmin) {
         List<Binding> bindings = new ArrayList<>();
-        Map<String,Queue> queues = this.queues();
         Iterator<Map.Entry<String,String>> iterator=mqProperties.getQueueAndRouteKey().entrySet().iterator();
         while(iterator.hasNext()){
             Map.Entry<String,String> entry=iterator.next();
             String queueName = entry.getValue();
             String routingKey = entry.getKey();
-
             Queue queue =queues.get(queueName);
-            System.out.println(entry.getKey()+":"+entry.getValue());
-            System.out.println("queue:"+queue);
-            bindings.add(BindingBuilder.bind(queue).to(defaultExchange()).with(routingKey));
-            //bindings.add(new Binding(queueName, Binding.DestinationType.QUEUE, mqProperties.getDefaultExchange(), routingKey, null));
+            Binding binding = BindingBuilder.bind(queue).to(directExchange).with(routingKey);
+            bindings.add(binding);
+            rabbitAdmin.declareQueue(queue);
+            rabbitAdmin.declareBinding(binding);
         }
         return bindings;
     }
 
 
 
+
     @Bean
     public RabbitTemplate rabbitTemplate(ConnectionFactory connectionFactory) {
         return new RabbitTemplate(connectionFactory);
+    }
+
+    @Bean
+    public RabbitAdmin rabbitAdmin(ConnectionFactory connectionFactory) {
+        return new RabbitAdmin(connectionFactory);
     }
 }
 
