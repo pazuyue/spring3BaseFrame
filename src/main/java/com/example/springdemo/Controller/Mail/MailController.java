@@ -1,4 +1,4 @@
-package com.example.springdemo.Controller;
+package com.example.springdemo.Controller.Mail;
 
 import com.example.springdemo.Interface.ControllerWebLog;
 import com.example.springdemo.Tool.MailTool;

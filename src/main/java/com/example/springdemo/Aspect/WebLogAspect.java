@@ -29,7 +29,7 @@ public class WebLogAspect {
     /**
      * 横切点
      */
-    @Pointcut("execution(public * com.example.springdemo.Controller..*.*(..))")
+    @Pointcut("execution(public * com.example.springdemo.Controller.Mail.*.*(..))")
     public void webLog() {
     }
     /**
