@@ -1,7 +1,7 @@
 package com.example.springdemo.Servlet.User;
 
 import com.example.springdemo.Mapper.UserMapper;
-import com.example.springdemo.Pojo.User;
+import com.example.springdemo.entity.User;
 import com.example.springdemo.Servlet.User.IService.IUserService;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;

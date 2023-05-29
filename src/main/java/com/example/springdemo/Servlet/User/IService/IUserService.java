@@ -1,9 +1,7 @@
 package com.example.springdemo.Servlet.User.IService;
 
-import com.example.springdemo.Pojo.User;
+import com.example.springdemo.entity.User;
 import com.github.pagehelper.PageInfo;
-
-import java.util.List;
 
 public interface IUserService {
     /**

@@ -1,7 +1,7 @@
 package com.example.springdemo.Controller;
 
 import com.example.springdemo.Interface.ControllerWebLog;
-import com.example.springdemo.Pojo.User;
+import com.example.springdemo.entity.User;
 import com.example.springdemo.Servlet.User.UserService;
 import com.github.pagehelper.PageInfo;
 import org.slf4j.Logger;
@@ -11,10 +11,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.servlet.ModelAndView;
-
-import java.util.List;
 
 @Controller
 @RequestMapping("/user")

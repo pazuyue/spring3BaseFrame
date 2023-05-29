@@ -1,6 +1,6 @@
 package com.example.springdemo.Servlet;
 
-import com.example.springdemo.Pojo.User;
+import com.example.springdemo.entity.User;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;

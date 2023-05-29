@@ -1,6 +1,6 @@
 package com.example.springdemo;
 
-import com.example.springdemo.Pojo.User;
+import com.example.springdemo.entity.User;
 import jakarta.annotation.Resource;
 import org.junit.Test;
 import org.junit.runner.RunWith;
