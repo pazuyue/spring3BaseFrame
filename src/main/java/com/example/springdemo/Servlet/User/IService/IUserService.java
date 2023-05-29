@@ -1,6 +1,7 @@
 package com.example.springdemo.Servlet.User.IService;
 
 import com.example.springdemo.Pojo.User;
+import com.github.pagehelper.PageInfo;
 
 import java.util.List;
 
@@ -9,7 +10,7 @@ public interface IUserService {
      * 查找所有
      * @return
      */
-    List<User> getAll();
+    public PageInfo<User> getUserList(int pageNum, int pageSize);
     /**
      * 根据id获取用户
      * @param id
@@ -27,7 +28,6 @@ public interface IUserService {
      */
     void updateUser(User user);
 
-    void deleteAll1();
+    void deleteAll();
 
-    void deleteAll12();
 }

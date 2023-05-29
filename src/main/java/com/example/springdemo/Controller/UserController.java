@@ -3,16 +3,20 @@ package com.example.springdemo.Controller;
 import com.example.springdemo.Interface.ControllerWebLog;
 import com.example.springdemo.Pojo.User;
 import com.example.springdemo.Servlet.User.UserService;
+import com.github.pagehelper.PageInfo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
 
-@RestController
+@Controller
 @RequestMapping("/user")
 public class UserController {
 
@@ -27,23 +31,12 @@ public class UserController {
         return userService.getOne(id);
     }
 
-    /**
-     *  查找所有
-     * @return
-     */
-    @RequestMapping("/getAll")
-    @ControllerWebLog(name = "查询", intoDb = true)
-    public List<User> getAll(){
-        return userService.getAll();
+    @GetMapping("/list")
+    @ControllerWebLog(name = "查询用户列表", intoDb = true)
+    public String showUserList(int pageNum, int pageSize, Model model) {
+        PageInfo<User> pageInfo = userService.getUserList(pageNum, pageSize);
+        model.addAttribute("pageInfo",pageInfo);
+        return "index";
     }
 
-    @GetMapping("/testLevel")
-    @ControllerWebLog(name = "查询", intoDb = true)
-    public void testLevel(){
-        logger.trace(" --- trace --- ");
-        logger.debug(" --- debug --- ");
-        logger.info(" --- info --- ");
-        logger.warn(" --- warn --- ");
-        logger.error(" --- error --- ");
-    }
 }
