@@ -42,8 +42,11 @@ public class TChannelOrderLogController {
     }
 
     @PostMapping(value = "/create")
-    public ResponseEntity<Object> create(@RequestBody TChannelOrderLog params) {
-        tChannelOrderLogService.save(params);
+    public ResponseEntity<Object> create(@RequestParam Integer channel_id,@RequestParam String tid,@RequestParam String content) {
+        TChannelOrderLog tChannelOrderLog = new TChannelOrderLog();
+        tChannelOrderLog.setChannelId(channel_id);
+        tChannelOrderLog.setContent(content);
+        tChannelOrderLogService.save(tChannelOrderLog);
         return new ResponseEntity<>("created successfully", HttpStatus.OK);
     }
 
