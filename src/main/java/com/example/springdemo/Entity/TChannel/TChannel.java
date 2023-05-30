@@ -24,6 +24,8 @@ public class TChannel implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
+    private static final int TM = 1; //天猫渠道
+
     /**
      * 渠道id
      */

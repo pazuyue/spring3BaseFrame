@@ -1,5 +1,6 @@
 package com.example.springdemo.Controller.TChannel;
 
+import com.example.springdemo.Service.Impl.TChannel.TChannelServiceImpl;
 import org.springframework.web.bind.annotation.*;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.springframework.http.HttpStatus;
@@ -21,8 +22,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 public class TChannelController {
 
 
+
+    //private TChannelService tChannelService;
     @Autowired
-    private TChannelService tChannelService;
+    private TChannelServiceImpl tChannelService;
 
     @GetMapping(value = "/")
     public ResponseEntity<Page<TChannel>> list(@RequestParam(required = false) Integer current, @RequestParam(required = false) Integer pageSize) {
@@ -37,8 +40,8 @@ public class TChannelController {
     }
 
     @GetMapping(value = "/{id}")
-    public ResponseEntity<TChannel> getById(@PathVariable("id") String id) {
-        return new ResponseEntity<>(tChannelService.getById(id), HttpStatus.OK);
+    public ResponseEntity<TChannel> getById(@PathVariable("id") Integer id) {
+        return new ResponseEntity<>(tChannelService.getTChannel(id), HttpStatus.OK);
     }
 
     @PostMapping(value = "/create")
