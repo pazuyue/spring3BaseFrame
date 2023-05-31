@@ -29,4 +29,14 @@ import java.util.List;
 @DS("sys_info")
 public class JdpTbTradeServiceImpl extends ServiceImpl<JdpTbTradeMapper, JdpTbTrade> implements JdpTbTradeService {
 
+    public List<JdpTbTrade> getAllByModified(Date sTime,Date eTime,Long tid)
+    {
+        QueryWrapper<JdpTbTrade> queryWrapper = new QueryWrapper<>();
+        queryWrapper.ge("modified",sTime)
+                .le("modified",eTime)
+                .ge("tid",tid)
+                .last("LIMIT 10");
+        List<JdpTbTrade> list = this.list(queryWrapper);
+        return list;
+    }
 }

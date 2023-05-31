@@ -18,7 +18,7 @@ public class TmpullOrders {
     @Autowired
     private TChannelOrderLogService tChannelOrderLogService;
     @Autowired
-    private JdpTbTradeService jdpTbTradeService;
+    private JdpTbTradeServiceImpl jdpTbTradeService;
 
     public boolean pullOrder(String startTime,String endTime) throws Exception {
 
@@ -30,12 +30,7 @@ public class TmpullOrders {
         Long tid =0L;
 
         while (true){
-            QueryWrapper<JdpTbTrade> queryWrapper = new QueryWrapper<>();
-            queryWrapper.ge("modified",sTime)
-                    .le("modified",eTime)
-                    .ge("tid",tid)
-                    .last("LIMIT 10");
-            List<JdpTbTrade> list = jdpTbTradeService.list(queryWrapper);
+            List<JdpTbTrade> list = jdpTbTradeService.getAllByModified(sTime,eTime,tid);
             if (list.isEmpty()){
                 return true;
             }
