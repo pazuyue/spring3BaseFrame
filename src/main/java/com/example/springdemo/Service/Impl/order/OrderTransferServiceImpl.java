@@ -24,9 +24,9 @@ public class OrderTransferServiceImpl implements OrderTransferService {
     private TChannelOrderLogService tChannelOrderLogService;
 
     @Override
-    public boolean autoOrderMigration(int channelId, int orderLogId) {
-        TChannel tChannel= tChannelService.getTChannel(channelId);
+    public boolean autoOrderMigration(int orderLogId) {
         TChannelOrderLog tChannelOrderLog = tChannelOrderLogService.getById(orderLogId);
+        TChannel tChannel= tChannelService.getTChannelByID(tChannelOrderLog.getChannelId());
         String json = tChannelOrderLog.getContent();
         Map<String,Object> map = JSONObject.parseObject(json,new TypeReference<HashMap<String,Object>>(){});
         System.out.println("map:"+map);

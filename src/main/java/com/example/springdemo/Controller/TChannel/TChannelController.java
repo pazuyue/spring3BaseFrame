@@ -41,7 +41,7 @@ public class TChannelController {
 
     @GetMapping(value = "/{id}")
     public ResponseEntity<TChannel> getById(@PathVariable("id") Integer id) {
-        return new ResponseEntity<>(tChannelService.getTChannel(id), HttpStatus.OK);
+        return new ResponseEntity<>(tChannelService.getTChannelByID(id), HttpStatus.OK);
     }
 
     @PostMapping(value = "/create")

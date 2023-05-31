@@ -1,10 +1,14 @@
 package com.example.springdemo.Service.Impl.PullOrders;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.example.springdemo.Config.RabbitMq.MQProperties;
 import com.example.springdemo.Entity.PullOrders.JdpTbTrade;
+import com.example.springdemo.Entity.TChannel.TChannel;
 import com.example.springdemo.Entity.TChannelOrderLog.TChannelOrderLog;
-import com.example.springdemo.Service.PullOrders.JdpTbTradeService;
-import com.example.springdemo.Service.TChannelOrderLog.TChannelOrderLogService;
+import com.example.springdemo.Service.Impl.TChannel.TChannelServiceImpl;
+import com.example.springdemo.Service.Impl.TChannelOrderLog.TChannelOrderLogServiceImpl;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,9 +20,15 @@ import java.util.List;
 public class TmpullOrders {
 
     @Autowired
-    private TChannelOrderLogService tChannelOrderLogService;
+    private TChannelOrderLogServiceImpl tChannelOrderLogService;
     @Autowired
     private JdpTbTradeServiceImpl jdpTbTradeService;
+    @Autowired
+    private TChannelServiceImpl tChannelService;
+    @Autowired
+    private RabbitTemplate rabbitTemplate;
+    @Autowired
+    private MQProperties mqProperties;
 
     public boolean pullOrder(String startTime,String endTime) throws Exception {
 
@@ -27,23 +37,29 @@ public class TmpullOrders {
         Date eTime = simpleDateFormat.parse(endTime);
         System.out.println("dateString:"+sTime);
         System.out.println("dateString:"+eTime);
-        Long tid =0L;
+        int page =1;
+        int pageSize=10;
 
         while (true){
-            List<JdpTbTrade> list = jdpTbTradeService.getAllByModified(sTime,eTime,tid);
-            if (list.isEmpty()){
-                return true;
-            }
-            JdpTbTrade lastElement = list.get(list.size() - 1);
-            tid = lastElement.getTid();
+            Page<JdpTbTrade> pages = jdpTbTradeService.getAllByModified(sTime,eTime,page,pageSize);
+            page ++;
+            System.out.println("page"+page);
+            List<JdpTbTrade> list = pages.getRecords();
             for (JdpTbTrade jdpTbTrade : list){
                 System.out.println("tid:"+jdpTbTrade.getTid());
                 TChannelOrderLog tChannelOrderLog = new TChannelOrderLog();
-                tChannelOrderLog.setChannelId(9);
+                TChannel tChannel = tChannelService.getTChannelByName(jdpTbTrade.getSellerNick());
+                tChannelOrderLog.setChannelId(tChannel.getChannelId());
                 tChannelOrderLog.setContent(jdpTbTrade.getJdpResponse());
                 tChannelOrderLog.setTid(jdpTbTrade.getTid().toString());
                 tChannelOrderLog.setOuterUpdateTime(jdpTbTrade.getModified());
-                tChannelOrderLogService.save(tChannelOrderLog);
+                tChannelOrderLogService.SelectOrsave(tChannelOrderLog);
+
+                rabbitTemplate.convertAndSend(mqProperties.getDefaultExchange(),
+                        "orderMigrationKey", "发送了一条信息");
+            }
+            if (!pages.hasNext()){
+                return true;
             }
         }
     }

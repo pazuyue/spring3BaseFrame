@@ -3,3 +3,4 @@ mq:
   queueAndRouteKey:
     yueguangRouteKey: yueguangQueue
     caiyunRouteKey: caiyunQueue
+    orderMigrationKey: orderMigrationQueue

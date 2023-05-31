@@ -6,6 +6,8 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import java.io.Serializable;
 import java.util.Date;
+
+import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -17,8 +19,7 @@ import lombok.Setter;
  * @author 月光光
  * @since 2023-05-29
  */
-@Getter
-@Setter
+@Data
 @TableName("t_channel")
 public class TChannel implements Serializable {
 

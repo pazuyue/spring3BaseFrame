@@ -39,7 +39,7 @@ public class AutoOrderMigrationTest {
     @Test
     public void autoOrderMigration()
     {
-        orderTransferService.autoOrderMigration(9,1);
+        orderTransferService.autoOrderMigration(1);
     }
 
     @Test
