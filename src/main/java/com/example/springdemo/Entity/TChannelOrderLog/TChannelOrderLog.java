@@ -1,9 +1,7 @@
 package com.example.springdemo.Entity.TChannelOrderLog;
 
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableField;
-import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.TableName;
+import com.baomidou.mybatisplus.annotation.*;
+
 import java.io.Serializable;
 import java.util.Date;
 import lombok.Getter;
@@ -47,6 +45,7 @@ public class TChannelOrderLog implements Serializable {
     /**
      * 当前版本号
      */
+    @Version
     @TableField("current_version")
     private Integer currentVersion;
 

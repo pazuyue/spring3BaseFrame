@@ -1,11 +1,21 @@
 package com.example.springdemo.Service.Impl.PullOrders;
 
 import com.baomidou.dynamic.datasource.annotation.DS;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.example.springdemo.Entity.PullOrders.JdpTbTrade;
+import com.example.springdemo.Entity.TChannelOrderLog.TChannelOrderLog;
 import com.example.springdemo.Mapper.PullOrders.JdpTbTradeMapper;
 import com.example.springdemo.Service.PullOrders.JdpTbTradeService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.example.springdemo.Service.TChannelOrderLog.TChannelOrderLogService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
 
 /**
  * <p>
