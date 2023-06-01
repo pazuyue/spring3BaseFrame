@@ -43,32 +43,6 @@ public class AutoOrderMigrationTest {
         orderTransferService.autoOrderMigration(1);
     }
 
-    
-    @Test
-    public void selectJdpTbTrade()
-    {
-        Calendar calendar = Calendar.getInstance();
-        calendar.set(2023,Calendar.MAY,30,18,00);
-        Date date = calendar.getTime();
-        System.out.println("calendar:"+date);
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        String dateString = sdf.format(date);
-        System.out.println("dateString:"+dateString);
-        // Step1：创建一个 QueryWrapper 对象
-        QueryWrapper<JdpTbTrade> queryWrapper = new QueryWrapper<>();
-        queryWrapper.ge("modified",dateString).last("LIMIT 1000");
-        List<JdpTbTrade> list = jdpTbTradeService.list(queryWrapper);
-        for (JdpTbTrade jdpTbTrade : list){
-            System.out.println("tid:"+jdpTbTrade.getTid());
-            TChannelOrderLog tChannelOrderLog = new TChannelOrderLog();
-            tChannelOrderLog.setChannelId(9);
-            tChannelOrderLog.setContent(jdpTbTrade.getJdpResponse());
-            tChannelOrderLog.setTid(jdpTbTrade.getTid().toString());
-            tChannelOrderLog.setOuterUpdateTime(jdpTbTrade.getModified());
-            tChannelOrderLogService.SelectOrsave(tChannelOrderLog);
-        }
-    }
-
     @Test
     public void testDate(){
         Calendar calendar = Calendar.getInstance();
