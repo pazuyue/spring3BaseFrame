@@ -6,6 +6,7 @@ import com.example.springdemo.Entity.PullOrders.JdpTbTrade;
 import com.example.springdemo.Entity.TChannelOrderLog.TChannelOrderLog;
 import com.example.springdemo.Service.Impl.PullOrders.JdpTbTradeServiceImpl;
 import com.example.springdemo.Service.Impl.PullOrders.TmpullOrders;
+import com.example.springdemo.Service.Impl.TChannelOrderLog.TChannelOrderLogServiceImpl;
 import com.example.springdemo.Service.Impl.order.OrderTransferServiceImpl;
 import com.example.springdemo.Service.PullOrders.JdpTbTradeService;
 import com.example.springdemo.Service.TChannelOrderLog.TChannelOrderLogService;
@@ -31,7 +32,7 @@ public class AutoOrderMigrationTest {
     @Autowired
     private JdpTbTradeService jdpTbTradeService;
     @Autowired
-    private TChannelOrderLogService tChannelOrderLogService;
+    private TChannelOrderLogServiceImpl tChannelOrderLogService;
 
     @Autowired
     private TmpullOrders tmpullOrders;
@@ -42,6 +43,7 @@ public class AutoOrderMigrationTest {
         orderTransferService.autoOrderMigration(1);
     }
 
+    
     @Test
     public void selectJdpTbTrade()
     {
@@ -63,7 +65,7 @@ public class AutoOrderMigrationTest {
             tChannelOrderLog.setContent(jdpTbTrade.getJdpResponse());
             tChannelOrderLog.setTid(jdpTbTrade.getTid().toString());
             tChannelOrderLog.setOuterUpdateTime(jdpTbTrade.getModified());
-            tChannelOrderLogService.save(tChannelOrderLog);
+            tChannelOrderLogService.SelectOrsave(tChannelOrderLog);
         }
     }
 
