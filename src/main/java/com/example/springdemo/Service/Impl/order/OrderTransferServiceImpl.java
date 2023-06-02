@@ -46,6 +46,11 @@ public class OrderTransferServiceImpl implements OrderTransferService {
     private final Lock lock = new ReentrantLock();
 
 
+    /**
+     * 自动转单入口
+     * @param orderLogId
+     * @return
+     */
     @Override
     public  boolean autoOrderMigration(int orderLogId) {
         JSONObject order;
@@ -53,20 +58,12 @@ public class OrderTransferServiceImpl implements OrderTransferService {
         Date payTime;
         TChannelOrderLog tChannelOrderLog = tChannelOrderLogService.getById(orderLogId);
         TChannel tChannel = tChannelService.getTChannelByID(tChannelOrderLog.getChannelId());
-        switch (tChannel.getChannelType()) {
-            case OrderDictionary.TM:
-                String json = tChannelOrderLog.getContent();
-                JSONObject jsonObject = JSON.parseObject(json);
-                order = jsonObject.getJSONObject("trade_fullinfo_get_response").getJSONObject("trade");
-                System.out.println("order"+order);
-                tid = order.getString("tid");
-                payTime = order.getDate("pay_time");
-                System.out.println("tid:" + tid);
-                System.out.println("pay_time:" + payTime);
-                break;
-            default:
-                throw new RuntimeException("渠道未设置");
-        }
+        String json = tChannelOrderLog.getContent();
+        order = this.orderMessageParse(json,tChannel);
+        tid = order.getString("tid");
+        payTime = order.getDate("pay_time");
+        System.out.println("tid:" + tid);
+        System.out.println("pay_time:" + payTime);
         if (order.isEmpty()){
             throw new RuntimeException("报文解析异常");
         }
@@ -77,12 +74,32 @@ public class OrderTransferServiceImpl implements OrderTransferService {
         try {
             OrderInfo orderInfo = orderInfoService.getOnlineOrderInfo(tid,channel_id);
             if (orderInfo ==null){
-                System.out.println("订单没进来可以干活了");
-
+                this.orderTransfer(order,tChannel);
+                return true;
             }
             throw new RuntimeException("订单已存在");
         }finally {
             lock.unlock();
+        }
+    }
+
+
+    /**
+     * 解析订单报文信息
+     * @param json
+     * @param tChannel
+     * @return
+     */
+    public JSONObject orderMessageParse(String json,TChannel tChannel)
+    {
+        switch (tChannel.getChannelType()) {
+            case OrderDictionary.TM:
+                JSONObject jsonObject = JSON.parseObject(json);
+                JSONObject order = jsonObject.getJSONObject("trade_fullinfo_get_response").getJSONObject("trade");
+                System.out.println("order"+order);
+                return order;
+            default:
+                throw new RuntimeException("渠道未设置");
         }
     }
 
@@ -101,6 +118,24 @@ public class OrderTransferServiceImpl implements OrderTransferService {
                 throw new RuntimeException("检查时间不通过");
             }
         }
+    }
+
+    /**
+     * 转单实现
+     * @param order
+     * @param tChannel
+     * @return
+     */
+    public boolean orderTransfer(JSONObject order,TChannel tChannel)
+    {
+        System.out.println("转单实现");
+        switch (tChannel.getChannelType()) {
+            case OrderDictionary.TM:
+                TmChannelOrderAnalysis orderAnalysis = new TmChannelOrderAnalysis();
+                orderAnalysis.orderMessageAnalysis(order,tChannel);
+                break;
+        }
+        return true;
     }
 
 }
