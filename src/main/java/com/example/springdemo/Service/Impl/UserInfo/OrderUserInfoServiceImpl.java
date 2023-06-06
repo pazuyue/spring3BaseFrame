@@ -1,7 +1,7 @@
 package com.example.springdemo.Service.Impl.UserInfo;
 
 import com.example.springdemo.Entity.UserInfo.OrderUserInfo;
-import com.example.springdemo.Mapper.UserInfo.OrderUserInfoMapper;
+import com.example.springdemo.Mapper.OrderUser.OrderUserInfoMapper;
 import com.example.springdemo.Service.UserInfo.OrderUserInfoService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;

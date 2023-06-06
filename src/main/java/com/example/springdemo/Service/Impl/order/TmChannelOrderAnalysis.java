@@ -10,12 +10,14 @@ import com.example.springdemo.Entity.GoodsInfo.GoodsSize;
 import com.example.springdemo.Entity.GoodsInfo.GoodsSkuSnInfo;
 import com.example.springdemo.Entity.OrderInfo.OrderGoods;
 import com.example.springdemo.Entity.OrderInfo.OrderInfo;
+import com.example.springdemo.Entity.PullOrders.JdpTbTrade;
 import com.example.springdemo.Entity.TChannel.TChannel;
 import com.example.springdemo.Entity.UserInfo.OrderUserAddress;
 import com.example.springdemo.Entity.UserInfo.OrderUserInfo;
 import com.example.springdemo.Service.Impl.GoodsInfo.GoodsColorServiceImpl;
 import com.example.springdemo.Service.Impl.GoodsInfo.GoodsSizeServiceImpl;
 import com.example.springdemo.Service.Impl.GoodsInfo.GoodsSkuSnInfoServiceImpl;
+import com.example.springdemo.Service.Impl.PullOrders.JdpTbTradeServiceImpl;
 import com.example.springdemo.Service.order.ChannelOrderAnalysis;
 import io.micrometer.common.util.StringUtils;
 import org.slf4j.Logger;
@@ -35,6 +37,8 @@ public class TmChannelOrderAnalysis implements ChannelOrderAnalysis {
     private GoodsSizeServiceImpl goodsSizeService;
     @Autowired
     private GoodsColorServiceImpl goodsColorService;
+    @Autowired
+    private JdpTbTradeServiceImpl jdpTbTradeService;
 
     @Override
     public Map<String,Object> orderMessageAnalysis(JSONObject order, TChannel channel) {
@@ -184,6 +188,19 @@ public class TmChannelOrderAnalysis implements ChannelOrderAnalysis {
         orderUserAddress.setMobile(order.getString("receiver_mobile"));
         orderUserAddress.setTel(order.getString("receiver_mobile"));
         return orderUserAddress;
+    }
+
+    @Override
+    public boolean checkOrderOnLineState(JSONObject order, TChannel channel) {
+        String tid = order.getString("tid");
+        JdpTbTrade jdpTbTrade = jdpTbTradeService.getOneByTid(tid,"tid","status");
+        String status = order.getString("order");
+        if (status != "WAIT_SELLER_SEND_GOODS")
+            return false;
+        if (jdpTbTrade.getStatus() !="WAIT_SELLER_SEND_GOODS")
+            return false;
+
+        return true;
     }
 
     /**

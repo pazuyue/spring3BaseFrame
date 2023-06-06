@@ -11,6 +11,8 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.example.springdemo.Service.TChannelOrderLog.TChannelOrderLogService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.ObjectUtils;
+import org.springframework.util.StringUtils;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -37,5 +39,13 @@ public class JdpTbTradeServiceImpl extends ServiceImpl<JdpTbTradeMapper, JdpTbTr
                 .le("modified",eTime);
         Page<JdpTbTrade> aPage = this.page(new Page<>(page, pageSize),queryWrapper);
         return aPage;
+    }
+
+    public JdpTbTrade getOneByTid(String tid,String ...selectInfos){
+        QueryWrapper<JdpTbTrade> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("tid",tid);
+        System.out.println("selectInfos"+selectInfos);
+        queryWrapper.select(selectInfos);
+        return this.getOne(queryWrapper);
     }
 }

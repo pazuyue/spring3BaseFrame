@@ -30,10 +30,9 @@ public class AutoOrderMigrationTest {
     @Autowired
     private OrderTransferServiceImpl orderTransferService;
     @Autowired
-    private JdpTbTradeService jdpTbTradeService;
+    private JdpTbTradeServiceImpl jdpTbTradeService;
     @Autowired
     private TChannelOrderLogServiceImpl tChannelOrderLogService;
-
     @Autowired
     private TmpullOrders tmpullOrders;
 
@@ -70,5 +69,13 @@ public class AutoOrderMigrationTest {
        TChannelOrderLog tChannelOrderLog =tChannelOrderLogService.getById(2);
        tChannelOrderLog.setChannelId(9);
        tChannelOrderLogService.updateById(tChannelOrderLog);
+    }
+
+    @Test
+    public void testGetOneByTid()
+    {
+        String tid = "9009999681807944198";
+        JdpTbTrade jdpTbTrade = jdpTbTradeService.getOneByTid(tid);
+        System.out.println("jdpTbTrade"+jdpTbTrade.toString());
     }
 }

@@ -1,7 +1,7 @@
 package com.example.springdemo.Service.Impl.OrderInfo;
 
 import com.example.springdemo.Entity.OrderInfo.OrderGoodsOrderLine;
-import com.example.springdemo.Mapper.OrderInfo.OrderGoodsOrderLineMapper;
+import com.example.springdemo.Mapper.OrderGoods.OrderGoodsOrderLineMapper;
 import com.example.springdemo.Service.OrderInfo.OrderGoodsOrderLineService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;

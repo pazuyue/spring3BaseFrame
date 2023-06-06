@@ -14,6 +14,7 @@ import com.example.springdemo.Service.Impl.TChannel.TChannelRulesServiceImpl;
 import com.example.springdemo.Service.Impl.TChannel.TChannelServiceImpl;
 import com.example.springdemo.Service.TChannel.TChannelRulesService;
 import com.example.springdemo.Service.TChannelOrderLog.TChannelOrderLogService;
+import com.example.springdemo.Service.order.ChannelOrderAnalysis;
 import com.example.springdemo.Service.order.OrderTransferService;
 import lombok.Data;
 import org.slf4j.Logger;
@@ -21,6 +22,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
+import org.springframework.util.ObjectUtils;
 
 import java.util.Date;
 import java.util.HashMap;
@@ -69,18 +71,18 @@ public class OrderTransferServiceImpl implements OrderTransferService {
         }
         int channel_id = tChannel.getChannelId();
         this.checkOrderPayTime(channel_id,payTime);
-
+        OrderInfo orderInfo;
         lock.lock();
         try {
-            OrderInfo orderInfo = orderInfoService.getOnlineOrderInfo(tid,channel_id);
-            if (orderInfo ==null){
-                this.orderTransfer(order,tChannel);
-                return true;
-            }
-            throw new RuntimeException("订单已存在");
+             orderInfo = orderInfoService.getOnlineOrderInfo(tid,channel_id);
+             if (!ObjectUtils.isEmpty(orderInfo)){
+                 throw new RuntimeException("订单已存在");
+             }
         }finally {
             lock.unlock();
         }
+        this.orderTransfer(order,tChannel);
+        return true;
     }
 
 
@@ -129,11 +131,18 @@ public class OrderTransferServiceImpl implements OrderTransferService {
     public boolean orderTransfer(JSONObject order,TChannel tChannel)
     {
         System.out.println("转单实现");
+        ChannelOrderAnalysis orderAnalysis;
         switch (tChannel.getChannelType()) {
             case OrderDictionary.TM:
-                TmChannelOrderAnalysis orderAnalysis = new TmChannelOrderAnalysis();
-                orderAnalysis.orderMessageAnalysis(order,tChannel);
+                orderAnalysis = new TmChannelOrderAnalysis();
+                Map<String,Object> orderMap = orderAnalysis.orderMessageAnalysis(order,tChannel);
+                System.out.println("转单信息"+orderMap.toString());
                 break;
+            default:
+                throw new RuntimeException("渠道未实现");
+        }
+        if (orderAnalysis.checkOrderOnLineState(order,tChannel) == false){
+
         }
         return true;
     }
