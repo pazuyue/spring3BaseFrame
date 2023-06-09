@@ -135,7 +135,6 @@ public class OrderTransferServiceImpl implements OrderTransferService {
 
     /**
      * 转单实现
-     *
      * @param order
      * @param tChannel
      * @return
@@ -176,14 +175,14 @@ public class OrderTransferServiceImpl implements OrderTransferService {
         OrderGoods orderGoods = (OrderGoods) orderMap.get("orderGoods");
         orderInfo.setOrderSn(orderSn);
         orderGoods.setOrderSn(orderSn);
-           int userID = orderUserInfoService.getBaseMapper().insert(orderUserInfo);
+           int userID = orderUserInfoService.saveOrderUserInfo(orderUserInfo);
            if (userID>0) {
                System.out.println("userID:"+userID);
                int i = 1/0;
                orderInfo.setUserId(String.valueOf(userID));
-               orderInfoService.save(orderInfo);
-               orderUserAddressService.save(orderUserAddress);
-               orderGoodsService.save(orderGoods);
+               //orderInfoService.save(orderInfo);
+               //orderUserAddressService.save(orderUserAddress);
+               //orderGoodsService.save(orderGoods);
            }
         return true;
     }

@@ -5,6 +5,7 @@ import com.example.springdemo.Mapper.OrderUser.OrderUserInfoMapper;
 import com.example.springdemo.Service.UserInfo.OrderUserInfoService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * <p>
@@ -16,5 +17,11 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class OrderUserInfoServiceImpl extends ServiceImpl<OrderUserInfoMapper, OrderUserInfo> implements OrderUserInfoService {
+
+
+    @Transactional
+    public int saveOrderUserInfo(OrderUserInfo orderUserInfo){
+        return this.getBaseMapper().insert(orderUserInfo);
+    }
 
 }
