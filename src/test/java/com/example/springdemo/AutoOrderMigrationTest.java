@@ -4,9 +4,11 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.example.springdemo.Entity.PullOrders.JdpTbTrade;
 import com.example.springdemo.Entity.TChannelOrderLog.TChannelOrderLog;
+import com.example.springdemo.Entity.User.User;
 import com.example.springdemo.Service.Impl.PullOrders.JdpTbTradeServiceImpl;
 import com.example.springdemo.Service.Impl.PullOrders.TmpullOrders;
 import com.example.springdemo.Service.Impl.TChannelOrderLog.TChannelOrderLogServiceImpl;
+import com.example.springdemo.Service.Impl.User.UserServiceImpl;
 import com.example.springdemo.Service.Impl.order.OrderTransferServiceImpl;
 import com.example.springdemo.Service.PullOrders.JdpTbTradeService;
 import com.example.springdemo.Service.TChannelOrderLog.TChannelOrderLogService;
@@ -36,6 +38,8 @@ public class AutoOrderMigrationTest {
     private TmpullOrders tmpullOrders;
     @Autowired
     private CustomIdGenerator customIdGenerator;
+    @Autowired
+    private UserServiceImpl userService;
 
     ExecutorService executorService = new ThreadPoolExecutor(
             10, // 核心线程数
@@ -49,6 +53,16 @@ public class AutoOrderMigrationTest {
     public void autoOrderMigration()
     {
         orderTransferService.autoOrderMigration(1);
+    }
+
+    @Test
+    public void testTransactional()
+    {
+        User user = new User();
+        user.setAge(1);
+        user.setEmail("yueguang@qq.com");
+        user.setName("yueguang");
+        userService.insert(user);
     }
 
     @Test

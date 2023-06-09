@@ -1,5 +1,7 @@
 package com.example.springdemo.Service.order;
 
+import java.util.Map;
+
 public interface OrderTransferService {
 
     /**
@@ -8,4 +10,6 @@ public interface OrderTransferService {
      * @return
      */
     public boolean autoOrderMigration(int orderLogId);
+
+    public boolean saveOrderInfoCore(Map<String, Object> orderMap, String orderSn);
 }

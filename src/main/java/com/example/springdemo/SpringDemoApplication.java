@@ -1,5 +1,6 @@
 package com.example.springdemo;
 
+import cn.hutool.extra.spring.EnableSpringUtil;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
@@ -11,6 +12,7 @@ import org.springframework.cache.annotation.EnableCaching;
 @ServletComponentScan
 @MapperScan({"com.example.springdemo.Mapper"})
 @EnableCaching //启动 Cache 功能
+@EnableSpringUtil
 public class SpringDemoApplication {
     public static void main(String[] args) {
         SpringApplication.run(SpringDemoApplication.class, args);

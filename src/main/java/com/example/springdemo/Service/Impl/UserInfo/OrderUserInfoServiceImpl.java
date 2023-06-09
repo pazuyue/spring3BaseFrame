@@ -21,7 +21,7 @@ public class OrderUserInfoServiceImpl extends ServiceImpl<OrderUserInfoMapper, O
 
     @Transactional
     public int saveOrderUserInfo(OrderUserInfo orderUserInfo){
-        return this.getBaseMapper().insert(orderUserInfo);
+        return this.baseMapper.insert(orderUserInfo);
     }
 
 }

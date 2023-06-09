@@ -1,7 +1,10 @@
 package com.example.springdemo.Service.Impl.order;
 
+import cn.hutool.extra.spring.SpringUtil;
 import com.alibaba.fastjson2.JSON;
 import com.alibaba.fastjson2.JSONObject;
+import com.baomidou.dynamic.datasource.annotation.DS;
+import com.baomidou.dynamic.datasource.annotation.DSTransactional;
 import com.example.springdemo.Aspect.WebLogAspect;
 import com.example.springdemo.Disposition.OrderDictionary;
 import com.example.springdemo.Entity.OrderInfo.OrderGoods;
@@ -139,6 +142,7 @@ public class OrderTransferServiceImpl implements OrderTransferService {
      * @param tChannel
      * @return
      */
+    @Transactional
     public boolean orderTransfer(JSONObject order, TChannel tChannel) {
         System.out.println("转单实现");
         ChannelOrderAnalysis orderAnalysis;
@@ -156,7 +160,8 @@ public class OrderTransferServiceImpl implements OrderTransferService {
             String orderSn = customIdGenerator.getCustomId("XS");
             if (ObjectUtils.isEmpty(orderSn))
                 throw new RuntimeException("获取订单失败");
-            this.saveOrderInfoCore(orderMap, orderSn);
+            //this.saveOrderInfoCore(orderMap, orderSn);
+            SpringUtil.getBean(OrderTransferService.class).saveOrderInfoCore(orderMap,orderSn);
         }
         return true;
     }
@@ -168,6 +173,7 @@ public class OrderTransferServiceImpl implements OrderTransferService {
      * @return
      */
     @Transactional
+    @Override
     public boolean saveOrderInfoCore(Map<String, Object> orderMap, String orderSn) {
         OrderInfo orderInfo = (OrderInfo) orderMap.get("orderInfo");
         OrderUserInfo orderUserInfo = (OrderUserInfo) orderMap.get("orderUserInfo");
@@ -177,12 +183,10 @@ public class OrderTransferServiceImpl implements OrderTransferService {
         orderGoods.setOrderSn(orderSn);
            int userID = orderUserInfoService.saveOrderUserInfo(orderUserInfo);
            if (userID>0) {
-               System.out.println("userID:"+userID);
-               int i = 1/0;
                orderInfo.setUserId(String.valueOf(userID));
-               //orderInfoService.save(orderInfo);
-               //orderUserAddressService.save(orderUserAddress);
-               //orderGoodsService.save(orderGoods);
+               orderInfoService.save(orderInfo);
+               orderUserAddressService.save(orderUserAddress);
+               orderGoodsService.save(orderGoods);
            }
         return true;
     }

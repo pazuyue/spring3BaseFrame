@@ -103,8 +103,6 @@
             <version>3.6.0</version>
         </dependency>
 
-
-
         <!-- lombok -->
         <dependency>
             <groupId>org.projectlombok</groupId>
@@ -176,6 +174,14 @@
             <version>2.0.5</version>
             <scope>test</scope>
         </dependency>
+
+        <!--   第三方组件     -->
+        <dependency>
+            <groupId>cn.hutool</groupId>
+            <artifactId>hutool-all</artifactId>
+            <version>5.7.9</version>
+        </dependency>
+
     </dependencies>
 
     <build>
