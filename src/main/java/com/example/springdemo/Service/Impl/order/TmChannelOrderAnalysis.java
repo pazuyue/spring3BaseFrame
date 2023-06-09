@@ -193,7 +193,7 @@ public class TmChannelOrderAnalysis implements ChannelOrderAnalysis {
         orderUserAddress.setEmail(order.getString("seller_email"));
         orderUserAddress.setMobile(order.getString("receiver_mobile"));
         orderUserAddress.setTel(order.getString("receiver_mobile"));
-        //orderUserAddress.setCompanyCode(channel.getCompanyCode());
+        orderUserAddress.setCompanyCode(channel.getCompanyCode());
         return orderUserAddress;
     }
 
