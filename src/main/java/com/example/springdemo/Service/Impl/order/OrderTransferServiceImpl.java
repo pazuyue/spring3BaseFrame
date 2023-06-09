@@ -86,9 +86,8 @@ public class OrderTransferServiceImpl implements OrderTransferService {
         lock.lock();
         try {
             orderInfo = orderInfoService.getOnlineOrderInfo(tid, channel_id);
-            if (!ObjectUtils.isEmpty(orderInfo)) {
+            if (!ObjectUtils.isEmpty(orderInfo))
                 throw new RuntimeException("订单已存在");
-            }
         } finally {
             lock.unlock();
         }
@@ -157,7 +156,6 @@ public class OrderTransferServiceImpl implements OrderTransferService {
             String orderSn = customIdGenerator.getCustomId("XS");
             if (ObjectUtils.isEmpty(orderSn))
                 throw new RuntimeException("获取订单失败");
-            //this.saveOrderInfoCore(orderMap, orderSn);
             SpringUtil.getBean(OrderTransferService.class).saveOrderInfoCore(orderMap,orderSn);
         }
         return true;
