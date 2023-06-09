@@ -47,7 +47,7 @@ public class OrderInfo implements Serializable {
      * 用户id, order_user_info.id
      */
     @TableField("user_id")
-    private Long userId;
+    private String userId;
 
     /**
      * 用户昵称

@@ -23,10 +23,14 @@ import io.micrometer.common.util.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
+import org.springframework.util.ObjectUtils;
 
 import java.math.BigDecimal;
 import java.util.*;
 
+@Component
 public class TmChannelOrderAnalysis implements ChannelOrderAnalysis {
 
     private static final Logger logger = LoggerFactory.getLogger(TmChannelOrderAnalysis.class);
@@ -45,11 +49,13 @@ public class TmChannelOrderAnalysis implements ChannelOrderAnalysis {
         OrderInfo orderInfo = this.getOrderInfo(order,channel);
         OrderUserInfo orderUserInfo = this.getOrderUserInfo(order,channel);
         OrderUserAddress orderUserAddress = this.getOrderUserAddress(order,channel);
+        OrderGoods orderGoods = new OrderGoods();
         System.out.println(orderInfo);
         Map<String,Object> map= new  HashMap<>();
         map.put("orderInfo",orderInfo);
         map.put("orderUserInfo",orderUserInfo);
         map.put("orderUserAddress",orderUserAddress);
+        map.put("orderGoods",orderGoods);
         return map;
     }
 
@@ -87,7 +93,7 @@ public class TmChannelOrderAnalysis implements ChannelOrderAnalysis {
         orderInfo.setBuyerMsg(order.getString("buyer_message"));
         orderInfo.setNickName(order.getString("buyer_nick"));
         orderInfo.setIsCustomized(isCustomized);
-        orderInfo.setUserId(order.getLong("buyer_open_uid"));
+        orderInfo.setUserId(order.getString("buyer_open_uid"));
         orderInfo.setCompanyCode(channel.getCompanyCode());
         orderInfo.setVipOrderStatus(OrderDictionary.FORMAL_ORDERS);
         orderInfo.setPayStatus(OrderDictionary.ALREADY_PAY);
@@ -187,17 +193,24 @@ public class TmChannelOrderAnalysis implements ChannelOrderAnalysis {
         orderUserAddress.setEmail(order.getString("seller_email"));
         orderUserAddress.setMobile(order.getString("receiver_mobile"));
         orderUserAddress.setTel(order.getString("receiver_mobile"));
+        //orderUserAddress.setCompanyCode(channel.getCompanyCode());
         return orderUserAddress;
     }
 
     @Override
     public boolean checkOrderOnLineState(JSONObject order, TChannel channel) {
         String tid = order.getString("tid");
-        JdpTbTrade jdpTbTrade = jdpTbTradeService.getOneByTid(tid,"tid","status");
-        String status = order.getString("order");
-        if (status != "WAIT_SELLER_SEND_GOODS")
+        System.out.println("checkOrderOnLineState_tid:"+tid);
+        if (ObjectUtils.isEmpty(jdpTbTradeService)) {
+            System.out.println("jdpTbTradeService is empty");
             return false;
-        if (jdpTbTrade.getStatus() !="WAIT_SELLER_SEND_GOODS")
+        }
+        JdpTbTrade jdpTbTrade = jdpTbTradeService.getOneByTid(tid,"tid","status");
+        String status = order.getString("status");
+        System.out.println("checkOrderOnLineState_status:"+status);
+        if (!Objects.equals(status, "WAIT_SELLER_SEND_GOODS"))
+            return false;
+        if (!Objects.equals(jdpTbTrade.getStatus(), "WAIT_SELLER_SEND_GOODS"))
             return false;
 
         return true;

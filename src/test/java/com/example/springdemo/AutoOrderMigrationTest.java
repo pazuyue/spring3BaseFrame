@@ -17,12 +17,9 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
-
 import java.text.SimpleDateFormat;
-import java.time.LocalTime;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.List;
 import java.util.concurrent.*;
 
 @RunWith(SpringRunner.class)
@@ -87,7 +84,7 @@ public class AutoOrderMigrationTest {
     public void testGetOneByTid()
     {
         String tid = "9009999681807944198";
-        JdpTbTrade jdpTbTrade = jdpTbTradeService.getOneByTid(tid);
+        JdpTbTrade jdpTbTrade = jdpTbTradeService.getOneByTid(tid,"tid","status");
         System.out.println("jdpTbTrade"+jdpTbTrade.toString());
     }
 
