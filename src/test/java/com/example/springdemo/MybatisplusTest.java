@@ -1,5 +1,6 @@
 package com.example.springdemo;
 
+import com.example.springdemo.Config.Mybaits.DynamicDataSource;
 import com.example.springdemo.Mapper.UserMapper;
 import com.example.springdemo.entity.User;
 import org.junit.Test;
@@ -17,6 +18,7 @@ public class MybatisplusTest {
 
     @Test
     public void contextLoads() {
+        DynamicDataSource.name.set("w");
         //其中参数是wrapper，条件构造器，这里不用的话可以写null，表示查询所有的用户
         List<User> users = userMapper.selectList(null);
         users.forEach(System.out::println);
@@ -24,7 +26,7 @@ public class MybatisplusTest {
 
     @Test
     public void testInsert(){
-
+        DynamicDataSource.name.set("s");
         User user = new User();
         user.setName("月光");
         user.setAge(21);
