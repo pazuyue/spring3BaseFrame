@@ -100,9 +100,7 @@ public class AutoOrderMigrationTest {
     @Test
     public void testGetID()
     {
-        for (int i = 0; i <30 ; i++) {
-            System.out.println(customIdGenerator.getCustomId("XS"));
-        }
+        System.out.println(customIdGenerator.getCustomId("XS"));
     }
 
     @Test
@@ -110,11 +108,11 @@ public class AutoOrderMigrationTest {
         // 创建一个 CountDownLatch 对象
         CountDownLatch latch = new CountDownLatch(10);
         // 启动 10 个任务
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i <= 10; i++) {
             executorService.submit(() -> {
                 // 执行某个函数
                 System.out.println("当前线程：" + Thread.currentThread().getName());
-                for (int j = 0; j <30 ; j++) {
+                for (int j = 0; j <= 30 ; j++) {
                     System.out.println(customIdGenerator.getCustomId("XS"));
                 }
 

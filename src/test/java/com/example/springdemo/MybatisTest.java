@@ -18,8 +18,7 @@ public class MybatisTest {
     @Test
     public void testSelectUser()
     {
-        DynamicDataSourceContextHolder.push("master");//手动切换
+        //DynamicDataSourceContextHolder.push("master");//手动切换
         System.out.println(userService.list());
-
     }
 }
