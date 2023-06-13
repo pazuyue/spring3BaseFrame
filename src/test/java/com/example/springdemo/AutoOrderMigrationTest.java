@@ -100,7 +100,9 @@ public class AutoOrderMigrationTest {
     @Test
     public void testGetID()
     {
-        System.out.println(customIdGenerator.getCustomId("XS"));
+        String key = "XS" + "_MAXID";
+        String id = customIdGenerator.generateOrderId(key);
+        System.out.println(id);
     }
 
     @Test
@@ -108,12 +110,15 @@ public class AutoOrderMigrationTest {
         // 创建一个 CountDownLatch 对象
         CountDownLatch latch = new CountDownLatch(10);
         // 启动 10 个任务
-        for (int i = 0; i <= 10; i++) {
+        for (int i = 0; i < 100; i++) {
             executorService.submit(() -> {
                 // 执行某个函数
                 System.out.println("当前线程：" + Thread.currentThread().getName());
-                for (int j = 0; j <= 30 ; j++) {
-                    System.out.println(customIdGenerator.getCustomId("XS"));
+                String key = "XS" + "_MAXID";
+                for (int j = 0; j < 10 ; j++) {
+                    //long id = customIdGenerator.getID(key);
+                    String id = customIdGenerator.generateOrderId(key);
+                    System.out.println(id);
                 }
 
                 // 执行完毕后调用 countDown() 方法
@@ -125,6 +130,20 @@ public class AutoOrderMigrationTest {
             latch.await();
         } catch (InterruptedException e) {
             e.printStackTrace();
+        }
+    }
+
+    @Test
+    public void testGetID2()
+    {
+        int t= 0;
+        for (int i = 0; i < 10; i++) {
+            for (int j = 0; j < 10 ; j++) {
+                String key = "XS" + "_MAXID";
+                long id = customIdGenerator.getID(key);
+                System.out.println(id);
+                //System.out.println(t++);
+            }
         }
     }
 }
