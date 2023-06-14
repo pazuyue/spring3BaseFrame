@@ -1,5 +1,6 @@
 package com.example.springdemo.Tool;
 
+import jakarta.annotation.Resource;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,15 +9,16 @@ import org.springframework.core.io.ClassPathResource;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
-@Service
+@Component
 public class MailTool {
 
     @Value("${spring.mail.username}")
     private String from;
 
-    @Autowired
+    @Resource
     private JavaMailSender mailSender;
 
     /**
@@ -24,16 +26,15 @@ public class MailTool {
      *
      * @return
      */
-    public boolean send() {
+    public boolean send(String recipient,String subject,String text) {
         try {
             SimpleMailMessage message = new SimpleMailMessage();
             message.setFrom(from);//发送者
-            message.setTo("yueguang@qingmutec.com");//接受者
+            message.setTo(recipient);//接受者
             //message.setCc("sohuniuer@sina.com");// 抄送
-            message.setSubject("邮件主题"); //邮件主题
-            message.setText("这里是邮件内容");//邮件内容
+            message.setSubject(subject); //邮件主题
+            message.setText(text);//邮件内容
             mailSender.send(message);
-            System.out.println("邮件发送成功");
             return true;
         } catch (Exception e) {
             e.printStackTrace();

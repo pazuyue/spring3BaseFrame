@@ -154,7 +154,7 @@
             <optional>true</optional>
         </dependency>
 
-        <!-- mybatis-plus-generator-ui -->
+        <!-- 分页 插件-->
         <dependency>
             <groupId>com.github.pagehelper</groupId>
             <artifactId>pagehelper-spring-boot-starter</artifactId>

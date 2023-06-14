@@ -16,7 +16,7 @@ public class MailController {
     @RequestMapping("/send")
     @ControllerWebLog(name = "查询", intoDb = true)
     public String send() {
-        mailTool.send();
+        mailTool.send("yueguang@qingmutec.com","邮件主题","这里是邮件内容");
         return "send success";
     }
 
