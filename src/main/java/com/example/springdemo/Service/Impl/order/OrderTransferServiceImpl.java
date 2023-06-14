@@ -153,7 +153,7 @@ public class OrderTransferServiceImpl implements OrderTransferService {
                 throw new RuntimeException("渠道未实现");
         }
         if (orderAnalysis.checkOrderOnLineState(order, tChannel)) {
-            String orderSn = customIdGenerator.getCustomId("XS");
+            String orderSn = customIdGenerator.generateOrderId("XS");
             if (ObjectUtils.isEmpty(orderSn))
                 throw new RuntimeException("获取订单失败");
             SpringUtil.getBean(OrderTransferService.class).saveOrderInfoCore(orderMap,orderSn);

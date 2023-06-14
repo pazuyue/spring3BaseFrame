@@ -100,8 +100,7 @@ public class AutoOrderMigrationTest {
     @Test
     public void testGetID()
     {
-        String key = "XS" + "_MAXID";
-        String id = customIdGenerator.generateOrderId(key);
+        String id = customIdGenerator.generateOrderId("XS");
         System.out.println(id);
     }
 
@@ -114,9 +113,8 @@ public class AutoOrderMigrationTest {
             executorService.submit(() -> {
                 // 执行某个函数
                 System.out.println("当前线程：" + Thread.currentThread().getName());
-                String key = "XS" + "_MAXID";
+                String key = "XS";
                 for (int j = 0; j < 10 ; j++) {
-                    //long id = customIdGenerator.getID(key);
                     String id = customIdGenerator.generateOrderId(key);
                     System.out.println(id);
                 }
@@ -133,17 +131,4 @@ public class AutoOrderMigrationTest {
         }
     }
 
-    @Test
-    public void testGetID2()
-    {
-        int t= 0;
-        for (int i = 0; i < 10; i++) {
-            for (int j = 0; j < 10 ; j++) {
-                String key = "XS" + "_MAXID";
-                long id = customIdGenerator.getID(key);
-                System.out.println(id);
-                //System.out.println(t++);
-            }
-        }
-    }
 }
