@@ -1,0 +1,30 @@
+spring:
+  application:
+    name: nacos-config
+  profiles:
+    active: test
+  host: 127.0.0.1
+  cloud:
+    nacos:
+      discovery:
+        server-addr: ${spring.host:127.0.0.1}:8848
+        namespace: 29c504c4-0aa0-4a13-b487-5fddad0356f7
+      config:
+        serverAddr:  ${spring.host:127.0.0.1}:8848
+        file-extension: yaml
+        #        shared-configs: # 共享配置
+        #            - dataId: database-dev.yaml
+        #              group: DEFAULT_GROUP
+        #              refresh: true
+
+management:
+  endpoint:
+    health:
+      show-details: always
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+logging:
+  level:
+    com.alibaba.cloud.nacos.configdata: debug
