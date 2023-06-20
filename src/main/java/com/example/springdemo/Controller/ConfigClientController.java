@@ -4,13 +4,12 @@ import com.alibaba.nacos.api.config.annotation.NacosValue;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
+
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/config")
@@ -24,5 +23,10 @@ public class ConfigClientController {
     @ResponseBody
     public boolean get() {
         return useLocalCache;
+    }
+
+    @GetMapping("/echo/{string}")
+    public String echo(@PathVariable String string) {
+        return "Hello," + string;
     }
 }

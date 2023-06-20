@@ -1,6 +1,8 @@
+server:
+  port: 9081
 spring:
   application:
-    name: service-provider
+    name: service-consumer
   profiles:
     active: test
   host: 127.0.0.1
