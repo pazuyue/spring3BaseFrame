@@ -12,7 +12,7 @@ public class RabbitMqConsumerService {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(RabbitMqConsumerService.class);
 
-     @RabbitListener(queues = "${mq.queue}")
+    @RabbitListener(queues = "${mq.queue}")
     public void receive(String payload, Channel channel, @Header(AmqpHeaders.DELIVERY_TAG) long tag) {
         LOGGER.info("消费内容为：{}", payload);
         RabbitMQUtils.askMessage(channel, tag, LOGGER);
