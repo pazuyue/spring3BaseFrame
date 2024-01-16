@@ -22,8 +22,10 @@ public class RabbitMQTest {
 
     @Test
     public void testSendMessage() {
-        rabbitTemplate.convertAndSend(mqProperties.getDefaultExchange(),
-                "yueguangRouteKey", "发送了一条信息");
+        for (int i = 0; i <= 10; i++) {
+            rabbitTemplate.convertAndSend(mqProperties.getDefaultExchange(),
+                    "yueguangRouteKey", "发送了一条信息");
+        }
     }
 
 

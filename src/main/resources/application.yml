@@ -1,5 +1,6 @@
 mq:
   defaultExchange: amqpExchange
+  queues: yueguangQueue,caiyunQueue,orderMigrationQueue,TestQueue
   queueAndRouteKey:
     yueguangRouteKey: yueguangQueue
     caiyunRouteKey: caiyunQueue
