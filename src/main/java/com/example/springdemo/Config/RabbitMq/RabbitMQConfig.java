@@ -56,7 +56,12 @@ public class RabbitMQConfig {
         Iterator<Map.Entry<String,String>> iterator=mqProperties.getQueueAndRouteKey().entrySet().iterator();
         while(iterator.hasNext()){
             Map.Entry<String,String> entry=iterator.next();
-            queues.put(entry.getValue(),new Queue(entry.getValue(), durable,exclusive,autoDelete));
+            Map<String, Object> args = new HashMap<>();
+            // x-dead-letter-exchange：这里声明当前业务队列绑定的死信交换机
+            args.put(mqProperties.getDeadExchangeLabel(), mqProperties.getDeadExchange());
+            // x-dead-letter-routing-key：这里声明当前业务队列的死信路由 key
+            args.put(mqProperties.getDeadRoutingKeyLabel(), mqProperties.getDeadRoutingKey());
+            queues.put(entry.getValue(),new Queue(entry.getValue(), durable,exclusive,autoDelete,args));
         }
         return queues;
     }
@@ -68,8 +73,33 @@ public class RabbitMQConfig {
         return new DirectExchange(mqProperties.getDefaultExchange(), durable, autoDelete);
     }
 
+    /**
+     * 定义业务队列使用的死信队列
+     */
     @Bean
-    public List<Binding> bindings(DirectExchange directExchange, Map<String,Queue> queues,RabbitAdmin rabbitAdmin) {
+    public Map<String,Queue> deadLetterQueues() {
+        Map<String,Queue> queues = new HashMap<>();
+        boolean durable = true;
+        boolean exclusive = false;
+        boolean autoDelete = false;
+        queues.put(mqProperties.getDeadQueue(),new Queue(mqProperties.getDeadQueue(), durable,exclusive,autoDelete));
+        return queues;
+    }
+
+    /**
+     * 定义死信队列使用的交换机
+     */
+    @Bean
+    public TopicExchange deadLetterTopicExchange() {
+        return new TopicExchange(mqProperties.getDeadExchange());
+    }
+
+
+
+
+    @Bean
+    public List<Binding> bindings(TopicExchange deadLetterTopicExchange,DirectExchange directExchange, Map<String,Queue> queues,Map<String,Queue> deadLetterQueues,RabbitAdmin rabbitAdmin) {
+        // 申明绑定死信交换机和对列
         List<Binding> bindings = new ArrayList<>();
         Iterator<Map.Entry<String,String>> iterator=mqProperties.getQueueAndRouteKey().entrySet().iterator();
         while(iterator.hasNext()){
@@ -82,9 +112,15 @@ public class RabbitMQConfig {
             rabbitAdmin.declareQueue(queue);
             rabbitAdmin.declareBinding(binding);
         }
+
+        Queue queue = deadLetterQueues.get(mqProperties.getDeadQueue());
+        Binding binding = BindingBuilder.bind(queue).to(deadLetterTopicExchange).with(mqProperties.getDeadRoutingKey());
+        bindings.add(binding);
+        // 申明绑定死信交换机和对列
+        rabbitAdmin.declareQueue(queue);
+        rabbitAdmin.declareBinding(binding);
         return bindings;
     }
-
 
 
 
