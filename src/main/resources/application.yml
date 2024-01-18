@@ -5,3 +5,9 @@ mq:
     yueguangRouteKey: yueguangQueue
     caiyunRouteKey: caiyunQueue
     orderMigrationKey: orderMigrationQueue
+    TestQueue: TestQueue
+  deadExchange: deadExchange
+  deadExchangeLabel: x-dead-letter-exchange
+  deadRoutingKeyLabel: x-dead-letter-routing-key
+  deadQueue: dead-queue
+  deadRoutingKey: dead_routing_key
