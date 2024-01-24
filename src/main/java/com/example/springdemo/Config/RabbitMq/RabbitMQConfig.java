@@ -39,6 +39,9 @@ public class RabbitMQConfig {
     @Value("${spring.rabbitmq.publisher-confirm-type}")
     private CachingConnectionFactory.ConfirmType publisherConfirmType;
 
+    @Value("${spring.rabbitmq.publisher-returns}")
+    private boolean publisherReturns;
+
     @Bean
     public ConnectionFactory connectionFactory() {
         CachingConnectionFactory connectionFactory = new CachingConnectionFactory();
@@ -48,6 +51,7 @@ public class RabbitMQConfig {
         connectionFactory.setPassword(password);
         connectionFactory.setVirtualHost(virtualHost);
         connectionFactory.setPublisherConfirmType(publisherConfirmType);
+        connectionFactory.setPublisherReturns(publisherReturns);
         return connectionFactory;
     }
 
