@@ -1,6 +1,7 @@
 package com.example.springdemo.Servlet.Rabbit;
 
 import cn.hutool.extra.spring.SpringUtil;
+import com.example.springdemo.Service.Queues.QueueService;
 import com.example.springdemo.Service.order.OrderTransferService;
 import com.example.springdemo.Utils.RabbitMQ.RabbitMQUtils;
 import com.rabbitmq.client.Channel;
@@ -21,13 +22,12 @@ public class RabbitMqConsumerService {
     //@RabbitListener(queues = "${mq.queues}")
     @RabbitListener(queues = "#{'${mq.queues}'.split(',')}")
     public void receive(String payload, Channel channel, MessageProperties properties, @Header(AmqpHeaders.DELIVERY_TAG) long tag) throws InterruptedException {
-        LOGGER.info("消费内容为：{}", payload);
         LOGGER.info("消费properties：{}", properties);
         LOGGER.info("消费channel：{}", channel);
-        String name = Thread.currentThread().getName();
-        LOGGER.info("name = " + name);
-        //String queue = properties.getConsumerQueue();
-        //Object bean = SpringUtil.getBean(queue);
+        String queue = properties.getConsumerQueue();
+        String queueBean = queue+"ServiceImpl";
+        QueueService queueService = SpringUtil.getBean(queueBean);
+        queueService.handle(payload);
         Thread.sleep(1000); // 休眠一秒，好看效果
         RabbitMQUtils.askMessage(channel, tag, LOGGER);
     }
