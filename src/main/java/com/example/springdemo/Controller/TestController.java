@@ -2,14 +2,12 @@ package com.example.springdemo.Controller;
 
 import com.example.commonadvice.config.SnowflakeIdGenerator;
 import com.example.springdemo.Config.RabbitMq.MQProperties;
-import com.example.springdemo.Entity.TChannel.TChannel;
 import com.example.springdemo.Service.Message.MessageService;
 import jakarta.annotation.Resource;
 import org.springframework.amqp.core.Message;
 import org.springframework.amqp.core.MessageBuilder;
 import org.springframework.amqp.core.MessageProperties;
 import org.springframework.amqp.rabbit.connection.CorrelationData;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
