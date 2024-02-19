@@ -1,5 +1,6 @@
 package com.example.springdemo.Controller;
 
+import com.example.commonadvice.config.SnowflakeIdGenerator;
 import com.example.springdemo.Config.RabbitMq.MQProperties;
 import com.example.springdemo.Entity.TChannel.TChannel;
 import com.example.springdemo.Service.Message.MessageService;
@@ -40,5 +41,13 @@ public class TestController {
             //rabbitTemplate.convertAndSend(mqProperties.getDefaultExchange(), "yueguangRouteKey", message);
         }
         return new ResponseEntity<>("successfully", HttpStatus.OK);
+    }
+
+    @GetMapping(value = "/testSnowflakeIdGenerator")
+    public  ResponseEntity<Object> testSnowflakeIdGenerator(){
+        SnowflakeIdGenerator snowflakeIdGenerator = new SnowflakeIdGenerator(1L,1L);
+        long nextId = snowflakeIdGenerator.nextId();
+        System.out.println(nextId);
+        return new ResponseEntity<>("successfully:"+nextId, HttpStatus.OK);
     }
 }
