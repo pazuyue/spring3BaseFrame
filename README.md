@@ -11,4 +11,5 @@
 - 数据库连接池pool2 集成
 - Cache 缓存集成
 - Rabbitmq集成
+- Spring Admin 监控服务接入
 - Sa-Token 权限管理集成 （接入中）
