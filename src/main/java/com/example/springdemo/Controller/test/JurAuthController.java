@@ -1,6 +1,8 @@
 package com.example.springdemo.Controller.test;
 
 import java.util.List;
+
+import cn.dev33.satoken.annotation.SaCheckLogin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import cn.dev33.satoken.stp.StpUtil;

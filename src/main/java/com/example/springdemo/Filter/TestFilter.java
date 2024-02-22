@@ -7,7 +7,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.UUID;
 
-@WebFilter(urlPatterns = { "/user/list" }) // 注册拦截器，并添加拦截路径‘/user/getOne’
+//@WebFilter(urlPatterns = { "/user/list" }) // 注册拦截器，并添加拦截路径‘/user/getOne’
 public class TestFilter implements Filter {
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
