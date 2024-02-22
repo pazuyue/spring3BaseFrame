@@ -11,3 +11,4 @@
 - 数据库连接池pool2 集成
 - Cache 缓存集成
 - Rabbitmq集成
+- Sa-Token 权限管理集成 （接入中）

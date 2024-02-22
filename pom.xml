@@ -193,6 +193,14 @@
             <artifactId>spring-boot-starter-actuator</artifactId>
         </dependency>
 
+        <!-- Sa-Token 权限认证 -->
+        <dependency>
+            <groupId>cn.dev33</groupId>
+            <artifactId>sa-token-spring-boot3-starter</artifactId>
+            <version>1.34.0</version>
+        </dependency>
+
+
         <dependency>
             <groupId>com.example</groupId>
             <artifactId>commonAdvice</artifactId>

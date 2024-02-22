@@ -1,4 +1,4 @@
-package com.example.springdemo.Controller;
+package com.example.springdemo.Controller.test;
 
 import com.example.commonadvice.config.SnowflakeIdGenerator;
 import com.example.springdemo.Config.RabbitMq.MQProperties;
