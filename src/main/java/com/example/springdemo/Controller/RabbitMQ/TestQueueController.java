@@ -37,7 +37,9 @@ public class TestQueueController {
         Message message = MessageBuilder.withBody(msg.getBytes()).andProperties(messageProperties).build();
 
         CorrelationData correlationData = new CorrelationData(); // 关联数据
-        correlationData.setId(IdUtil.simpleUUID());
+        String messageID = IdUtil.simpleUUID();
+        log.info("messageID="+messageID);
+        correlationData.setId(messageID);
         messageService.sendMsg(mqProperties.getDefaultExchange(), "yueguangRouteKey", message,correlationData);
         log.info("消息：【" + msg + "】已发送！");
         return new ResponseEntity<>("updated successfully"+msg, HttpStatus.OK);

@@ -20,7 +20,7 @@ public class RabbitMqConsumerService {
     private static final Logger LOGGER = LoggerFactory.getLogger(RabbitMqConsumerService.class);
 
     //@RabbitListener(queues = "${mq.queues}")
-    //@RabbitListener(queues = "#{'${mq.queues}'.split(',')}")
+    @RabbitListener(queues = "#{'${mq.queues}'.split(',')}")
     public void receive(String payload, Channel channel, MessageProperties properties, @Header(AmqpHeaders.DELIVERY_TAG) long tag) throws InterruptedException {
         LOGGER.info("消费properties：{}", properties);
         LOGGER.info("消费channel：{}", channel);
