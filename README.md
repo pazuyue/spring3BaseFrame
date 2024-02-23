@@ -7,9 +7,17 @@
 - Logback 日志功能实现
 - JMH 压测包实现
 - Redis集成
+  - 连接池
 - MySQL-mybatis-plus集成
 - 数据库连接池pool2 集成
 - Cache 缓存集成
+  - @Cacheable 缓存管理
+  - 缓存序列化
 - Rabbitmq集成
 - Spring Admin 监控服务接入
 - Sa-Token 权限管理集成 （接入中）
+  - 用户名密码登录
+  - token 生成
+  - 权限认证
+  - 路由拦截鉴权
+  - 分布式session（redis+json存储）
