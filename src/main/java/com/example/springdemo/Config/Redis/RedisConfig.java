@@ -26,6 +26,11 @@ public class RedisConfig {
         return new LettuceConnectionFactory();
     }
 
+    /**
+     *
+     * @param connectionFactory
+     * @return
+     */
     @Bean
     public RedisTemplate<String, Serializable> redisTemplate(LettuceConnectionFactory connectionFactory) {
         RedisTemplate<String, Serializable> redisTemplate = new RedisTemplate<>();
@@ -35,8 +40,12 @@ public class RedisConfig {
         return redisTemplate;
     }
 
+    /**
+     * String比较常用所以说单独提出来一个bean
+     * @param redisConnectionFactory
+     * @return
+     */
     @Bean
-    //String比较常用所以说单独提出来一个bean
     public StringRedisTemplate stringRedisTemplate(RedisConnectionFactory redisConnectionFactory) {
         StringRedisTemplate template = new StringRedisTemplate();
         template.setConnectionFactory(redisConnectionFactory);

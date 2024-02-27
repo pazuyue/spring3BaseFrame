@@ -3,6 +3,7 @@ package com.example.springdemo.Service.Impl.order;
 import cn.hutool.extra.spring.SpringUtil;
 import com.alibaba.fastjson2.JSON;
 import com.alibaba.fastjson2.JSONObject;
+import com.example.commonadvice.config.SnowflakeIdGenerator;
 import com.example.springdemo.Aspect.WebLogAspect;
 import com.example.springdemo.Disposition.OrderDictionary;
 import com.example.springdemo.Entity.OrderInfo.OrderGoods;
@@ -21,7 +22,7 @@ import com.example.springdemo.Service.Impl.UserInfo.OrderUserInfoServiceImpl;
 import com.example.springdemo.Service.TChannelOrderLog.TChannelOrderLogService;
 import com.example.springdemo.Service.order.ChannelOrderAnalysis;
 import com.example.springdemo.Service.order.OrderTransferService;
-import com.example.springdemo.Tool.CustomIdGenerator;
+import jakarta.annotation.Resource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,8 +48,8 @@ public class OrderTransferServiceImpl implements OrderTransferService {
     private TChannelRulesServiceImpl tChannelRulesService;
     @Autowired
     private OrderInfoServiceImpl orderInfoService;
-    @Autowired
-    private CustomIdGenerator customIdGenerator;
+    @Resource
+    private SnowflakeIdGenerator snowflakeIdGenerator;
     @Autowired
     private OrderUserInfoServiceImpl orderUserInfoService;
     @Autowired
@@ -153,7 +154,7 @@ public class OrderTransferServiceImpl implements OrderTransferService {
                 throw new RuntimeException("渠道未实现");
         }
         if (orderAnalysis.checkOrderOnLineState(order, tChannel)) {
-            String orderSn = customIdGenerator.generateOrderId("XS");
+            String orderSn = "XS"+snowflakeIdGenerator.nextId();
             if (ObjectUtils.isEmpty(orderSn))
                 throw new RuntimeException("获取订单失败");
             SpringUtil.getBean(OrderTransferService.class).saveOrderInfoCore(orderMap,orderSn);
