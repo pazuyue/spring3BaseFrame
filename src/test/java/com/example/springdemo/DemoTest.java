@@ -1,6 +1,6 @@
 package com.example.springdemo;
 
-import com.example.commonadvice.config.SnowflakeIdGenerator;
+import com.example.commonadvice.tool.SnowflakeIdGenerator;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;

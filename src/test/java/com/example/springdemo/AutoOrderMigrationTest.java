@@ -1,5 +1,6 @@
 package com.example.springdemo;
 
+import com.example.commonadvice.tool.SnowflakeIdGenerator;
 import com.example.springdemo.Entity.PullOrders.JdpTbTrade;
 import com.example.springdemo.Entity.TChannelOrderLog.TChannelOrderLog;
 import com.example.springdemo.Entity.User.User;
@@ -8,7 +9,7 @@ import com.example.springdemo.Service.Impl.PullOrders.TmpullOrders;
 import com.example.springdemo.Service.Impl.TChannelOrderLog.TChannelOrderLogServiceImpl;
 import com.example.springdemo.Service.Impl.User.UserServiceImpl;
 import com.example.springdemo.Service.Impl.order.OrderTransferServiceImpl;
-import com.example.springdemo.Tool.CustomIdGenerator;
+import jakarta.annotation.Resource;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,9 +33,10 @@ public class AutoOrderMigrationTest {
     @Autowired
     private TmpullOrders tmpullOrders;
     @Autowired
-    private CustomIdGenerator customIdGenerator;
-    @Autowired
     private UserServiceImpl userService;
+
+    @Resource
+    private SnowflakeIdGenerator snowflakeIdGenerator;
 
     ExecutorService executorService = new ThreadPoolExecutor(
             10, // 核心线程数
@@ -98,10 +100,11 @@ public class AutoOrderMigrationTest {
     }
 
     @Test
-    public void testGetID()
+    public String testGetID()
     {
-        String id = customIdGenerator.generateOrderId("XS");
+        String id = "XS"+snowflakeIdGenerator.nextId();
         System.out.println(id);
+        return id;
     }
 
     @Test
@@ -115,7 +118,7 @@ public class AutoOrderMigrationTest {
                 System.out.println("当前线程：" + Thread.currentThread().getName());
                 String key = "XS";
                 for (int j = 0; j < 10 ; j++) {
-                    String id = customIdGenerator.generateOrderId(key);
+                    String id = this.testGetID();
                     System.out.println(id);
                 }
 

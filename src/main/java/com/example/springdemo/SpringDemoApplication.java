@@ -11,7 +11,6 @@ import org.springframework.context.annotation.ComponentScan;
 
 @SpringBootApplication
 @ServletComponentScan(basePackages = {"com.example.commonadvice","com.example.springdemo"})
-//@ComponentScan(basePackages = {"com.example.commonadvice"}) //根据实际情况修改包路径
 @MapperScan({"com.example.springdemo.Mapper"})
 @EnableCaching //启动 Cache 功能
 @EnableSpringUtil

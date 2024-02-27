@@ -1,4 +1,4 @@
-package com.example.commonadvice.config;
+package com.example.commonadvice.tool;
 public class SnowflakeIdGenerator {
 
     private long datacenterId; // 数据中心ID

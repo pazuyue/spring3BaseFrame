@@ -1,6 +1,6 @@
 package com.example.springdemo.Controller.test;
 
-import com.example.commonadvice.config.SnowflakeIdGenerator;
+import com.example.commonadvice.tool.SnowflakeIdGenerator;
 import com.example.springdemo.Config.RabbitMq.MQProperties;
 import com.example.springdemo.Service.Message.MessageService;
 import jakarta.annotation.Resource;
