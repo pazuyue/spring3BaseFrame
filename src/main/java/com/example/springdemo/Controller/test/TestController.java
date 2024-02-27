@@ -3,11 +3,13 @@ package com.example.springdemo.Controller.test;
 import com.example.commonadvice.tool.SnowflakeIdGenerator;
 import com.example.springdemo.Config.RabbitMq.MQProperties;
 import com.example.springdemo.Service.Message.MessageService;
+import com.example.springdemo.Service.Plugin.OrderPlugin;
 import jakarta.annotation.Resource;
 import org.springframework.amqp.core.Message;
 import org.springframework.amqp.core.MessageBuilder;
 import org.springframework.amqp.core.MessageProperties;
 import org.springframework.amqp.rabbit.connection.CorrelationData;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,6 +24,8 @@ public class TestController {
     private MQProperties mqProperties;
     @Resource
     private MessageService messageService;
+    @Autowired
+    private OrderPlugin orderPlugin;
 
     @GetMapping(value = "/testSendMessage")
     public ResponseEntity<Object> testSendMessage(){
@@ -47,5 +51,11 @@ public class TestController {
         long nextId = snowflakeIdGenerator.nextId();
         System.out.println(nextId);
         return new ResponseEntity<>("successfully:"+nextId, HttpStatus.OK);
+    }
+
+    @GetMapping(value = "/testOrderPlugin")
+    public  ResponseEntity<Object> testOrderPlugin(){
+        orderPlugin.execute();
+        return new ResponseEntity<>("successfully", HttpStatus.OK);
     }
 }
