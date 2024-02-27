@@ -7,9 +7,11 @@ import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.web.servlet.ServletComponentScan;
 import org.springframework.cache.annotation.EnableCaching;
+import org.springframework.context.annotation.ComponentScan;
 
 @SpringBootApplication
 @ServletComponentScan
+//@ComponentScan(basePackages = {"com.example.commonadvice"}) //根据实际情况修改包路径
 @MapperScan({"com.example.springdemo.Mapper"})
 @EnableCaching //启动 Cache 功能
 @EnableSpringUtil

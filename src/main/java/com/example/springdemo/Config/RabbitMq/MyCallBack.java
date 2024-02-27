@@ -19,7 +19,6 @@ public class MyCallBack implements RabbitTemplate.ConfirmCallback,RabbitTemplate
     // 设置 rabbitTemplate 的回调对象
     @PostConstruct
     public void init(){
-        System.out.println("===========MyCallBack============");
         rabbitTemplate.setConfirmCallback(this);
         //注入接口实现
         rabbitTemplate.setReturnsCallback(this);
