@@ -8,7 +8,7 @@ import org.springframework.web.servlet.config.annotation.ViewResolverRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupport;
 
 
-@Configuration
+//@Configuration
 public class WebMvcConfig extends WebMvcConfigurationSupport {
 
     /**

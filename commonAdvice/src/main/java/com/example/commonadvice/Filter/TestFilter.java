@@ -9,11 +9,11 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.UUID;
 
-@WebFilter(filterName = "MyFilter",
-        urlPatterns = "/*",/*通配符（*）表示对所有的web资源进行拦截*/
+/*@WebFilter(filterName = "MyFilter",
+        urlPatterns = "/*",*//*通配符（*）表示对所有的web资源进行拦截*//*
         initParams = {
-                @WebInitParam(name = "test", value = "1")/*这里可以放一些初始化的参数*/
-        })
+                @WebInitParam(name = "test", value = "1")*//*这里可以放一些初始化的参数*//*
+        })*/
 public class TestFilter implements Filter {
 
     private String filterName;

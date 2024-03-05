@@ -9,7 +9,7 @@
 - Redis集成
   - 连接池
 - MySQL-mybatis-plus集成
-- 数据库连接池pool2 集成
+- 连接池pool2 集成
 - Cache 缓存集成
   - @Cacheable 缓存管理
   - 缓存序列化
