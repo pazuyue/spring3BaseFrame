@@ -64,11 +64,7 @@
             <scope>provided</scope>
         </dependency>
 
-        <!-- 启用邮箱 -->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-mail</artifactId>
-        </dependency>
+
 
 
 
@@ -203,11 +199,6 @@
         </dependency>
 
         <!-- Sa-Token 整合 Redis （使用 jackson 序列化方式）-->
-       <!-- <dependency>
-            <groupId>cn.dev33</groupId>
-            <artifactId>sa-token-redis-jackson</artifactId>
-            <version>1.37.0</version>
-        </dependency>-->
         <dependency>
             <groupId>cn.dev33</groupId>
             <artifactId>sa-token-dao-redis-jackson</artifactId>
@@ -215,13 +206,7 @@
         </dependency>
 
 
-        <!-- &lt;!&ndash; Sa-Token 整合 Redis （使用 jdk 默认序列化方式） &ndash;&gt;
-         <dependency>
-             <groupId>cn.dev33</groupId>
-             <artifactId>sa-token-redis</artifactId>
-             <version>1.37.0</version>
-         </dependency>-->
-
+        <!-- 公共子服务-->
         <dependency>
             <groupId>com.example</groupId>
             <artifactId>commonAdvice</artifactId>
@@ -242,10 +227,22 @@
 
     <build>
         <plugins>
-            <plugin>
+           <!-- <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-resources-plugin</artifactId>
                 <version>3.1.0</version>
+            </plugin>-->
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>repackage</id>
+                        <goals>
+                            <goal>repackage</goal>
+                        </goals>
+                    </execution>
+                </executions>
             </plugin>
             <!--<plugin>
                 <groupId>org.springframework.boot</groupId>

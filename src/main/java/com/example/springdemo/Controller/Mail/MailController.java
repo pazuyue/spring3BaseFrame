@@ -1,8 +1,8 @@
 package com.example.springdemo.Controller.Mail;
 
+import com.example.commonadvice.config.Mail.MailTool;
 import com.example.springdemo.Interface.ControllerWebLog;
-import com.example.springdemo.Tool.MailTool;
-import org.springframework.beans.factory.annotation.Autowired;
+import jakarta.annotation.Resource;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/mail")
 public class MailController {
 
-    @Autowired
+    @Resource
     private MailTool mailTool;
 
     @RequestMapping("/send")
