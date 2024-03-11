@@ -1,10 +1,11 @@
 package com.example.springdemo.Service.Impl.order;
 
-import com.example.springdemo.Service.Plugin.OrderPlugin;
+import com.example.springdemo.Config.Common.Enums.orderPluginEnum;
+import com.example.springdemo.Service.Plugin.OrderPluginService;
 import org.springframework.stereotype.Service;
 
-@Service
-public class HmOrderTransferServiceImpl implements OrderPlugin {
+@Service(orderPluginEnum.Type.HM)
+public class HmOrderTransferServiceImpl implements OrderPluginService {
     @Override
     public boolean execute() {
         String msg = "HM转单实现";

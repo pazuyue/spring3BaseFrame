@@ -1,9 +1,10 @@
 package com.example.springdemo.Controller.test;
 
 import com.example.commonadvice.tool.SnowflakeIdGenerator;
+import com.example.springdemo.Config.Common.Enums.orderPluginEnum;
+import com.example.springdemo.Config.Common.Factory.OrderPluginFactory;
 import com.example.springdemo.Config.RabbitMq.MQProperties;
 import com.example.springdemo.Service.Message.MessageService;
-import com.example.springdemo.Service.Plugin.OrderPlugin;
 import jakarta.annotation.Resource;
 import org.springframework.amqp.core.Message;
 import org.springframework.amqp.core.MessageBuilder;
@@ -25,7 +26,7 @@ public class TestController {
     @Resource
     private MessageService messageService;
     @Autowired
-    private OrderPlugin orderPlugin;
+    private OrderPluginFactory orderPluginFactory;
 
     @GetMapping(value = "/testSendMessage")
     public ResponseEntity<Object> testSendMessage(){
@@ -55,7 +56,7 @@ public class TestController {
 
     @GetMapping(value = "/testOrderPlugin")
     public  ResponseEntity<Object> testOrderPlugin(){
-        orderPlugin.execute();
+        boolean execute = orderPluginFactory.getBean(orderPluginEnum.Type.Common).execute();
         return new ResponseEntity<>("successfully", HttpStatus.OK);
     }
 }

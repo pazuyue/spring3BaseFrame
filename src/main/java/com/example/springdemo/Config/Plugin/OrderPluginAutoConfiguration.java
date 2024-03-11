@@ -2,7 +2,7 @@ package com.example.springdemo.Config.Plugin;
 
 import com.example.springdemo.Service.Impl.order.CommonOrderTransferServiceImpl;
 import com.example.springdemo.Service.Impl.order.HmOrderTransferServiceImpl;
-import com.example.springdemo.Service.Plugin.OrderPlugin;
+import com.example.springdemo.Service.Plugin.OrderPluginService;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -14,7 +14,7 @@ public class OrderPluginAutoConfiguration {
     private String companyName;
 
     @Bean
-    public OrderPlugin orderPlugin() {
+    public OrderPluginService orderPlugin() {
         if ("HM".equals(companyName)) {
             System.out.println("new HmOrderTransferServiceImpl");
             return new HmOrderTransferServiceImpl();
