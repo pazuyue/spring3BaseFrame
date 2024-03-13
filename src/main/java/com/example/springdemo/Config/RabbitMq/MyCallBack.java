@@ -26,7 +26,6 @@ public class MyCallBack implements RabbitTemplate.ConfirmCallback,RabbitTemplate
 
     @Override
     public void confirm(CorrelationData correlationData, boolean ack, String cause) {
-        System.out.println("hello world");
         String id = correlationData != null?correlationData.getId():"";
         if(ack){
             System.out.println("交换机已经收到id为："+id+"的消息");
