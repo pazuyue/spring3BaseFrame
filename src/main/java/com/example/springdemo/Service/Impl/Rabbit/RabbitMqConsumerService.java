@@ -1,8 +1,7 @@
-package com.example.springdemo.Servlet.Rabbit;
+package com.example.springdemo.Service.Impl.Rabbit;
 
 import cn.hutool.extra.spring.SpringUtil;
 import com.example.springdemo.Service.Queues.QueueService;
-import com.example.springdemo.Service.order.OrderTransferService;
 import com.example.springdemo.Utils.RabbitMQ.RabbitMQUtils;
 import com.rabbitmq.client.Channel;
 import org.slf4j.Logger;
@@ -10,7 +9,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.amqp.core.MessageProperties;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.amqp.support.AmqpHeaders;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.messaging.handler.annotation.Header;
 import org.springframework.stereotype.Component;
 
