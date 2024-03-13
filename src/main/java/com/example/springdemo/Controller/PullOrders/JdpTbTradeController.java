@@ -1,5 +1,6 @@
 package com.example.springdemo.Controller.PullOrders;
 
+import com.example.springdemo.Interface.ControllerWebLog;
 import org.springframework.web.bind.annotation.*;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.springframework.http.HttpStatus;
@@ -25,6 +26,7 @@ public class JdpTbTradeController {
     private JdpTbTradeService jdpTbTradeService;
 
     @GetMapping(value = "/")
+    @ControllerWebLog(name = "查询", intoDb = true)
     public ResponseEntity<Page<JdpTbTrade>> list(@RequestParam(required = false) Integer current, @RequestParam(required = false) Integer pageSize) {
         if (current == null) {
             current = 1;

@@ -4,7 +4,6 @@ import cn.hutool.extra.spring.SpringUtil;
 import com.alibaba.fastjson2.JSON;
 import com.alibaba.fastjson2.JSONObject;
 import com.example.commonadvice.tool.SnowflakeIdGenerator;
-import com.example.springdemo.Aspect.WebLogAspect;
 import com.example.springdemo.Disposition.OrderDictionary;
 import com.example.springdemo.Entity.OrderInfo.OrderGoods;
 import com.example.springdemo.Entity.OrderInfo.OrderInfo;
@@ -37,8 +36,6 @@ import java.util.concurrent.locks.ReentrantLock;
 
 @Service
 public class OrderTransferServiceImpl implements OrderTransferService {
-
-    private static final Logger logger = LoggerFactory.getLogger(WebLogAspect.class);
 
     @Autowired
     private TChannelServiceImpl tChannelService;

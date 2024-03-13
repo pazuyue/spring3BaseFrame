@@ -1,7 +1,10 @@
 package com.example.springdemo.Aspect;
 
+import cn.hutool.core.util.ObjectUtil;
 import com.example.springdemo.Interface.ControllerWebLog;
 import jakarta.servlet.http.HttpServletRequest;
+import lombok.extern.log4j.Log4j;
+import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.*;
@@ -17,19 +20,20 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
+@Slf4j
 @Aspect
 @Component
 @Order(100)
 public class WebLogAspect {
 
-    private static final Logger logger = LoggerFactory.getLogger(WebLogAspect.class);
+    //private static final Logger logger = LoggerFactory.getLogger(WebLogAspect.class);
 
     private ThreadLocal<Map<String, Object>> threadLocal = new ThreadLocal<Map<String, Object>>();
 
     /**
      * 横切点
      */
-    @Pointcut("execution(public * com.example.springdemo.Controller.Mail.*.*(..))")
+    @Pointcut("execution(public * com.example.springdemo.Controller.*.*.*(..))")
     public void webLog() {
     }
     /**
@@ -45,23 +49,23 @@ public class WebLogAspect {
         HttpServletRequest request = sra.getRequest();
         // 记录请求内容，threadInfo存储所有内容
         Map<String, Object> threadInfo = new HashMap<>();
-        logger.info("URL : " + request.getRequestURL());
+        log.info("URL : " + request.getRequestURL());
         threadInfo.put("url", request.getRequestURL());
-        logger.info("URI : " + request.getRequestURI());
+        log.info("URI : " + request.getRequestURI());
         threadInfo.put("uri", request.getRequestURI());
-        logger.info("HTTP_METHOD : " + request.getMethod());
+        log.info("HTTP_METHOD : " + request.getMethod());
         threadInfo.put("httpMethod", request.getMethod());
-        logger.info("REMOTE_ADDR : " + request.getRemoteAddr());
+        log.info("REMOTE_ADDR : " + request.getRemoteAddr());
         threadInfo.put("ip", request.getRemoteAddr());
-        logger.info("CLASS_METHOD : " + joinPoint.getSignature().getDeclaringTypeName() + "."
+        log.info("CLASS_METHOD : " + joinPoint.getSignature().getDeclaringTypeName() + "."
                 + joinPoint.getSignature().getName());
         threadInfo.put("classMethod",
                 joinPoint.getSignature().getDeclaringTypeName() + "." + joinPoint.getSignature().getName());
-        logger.info("ARGS : " + Arrays.toString(joinPoint.getArgs()));
+        log.info("ARGS : " + Arrays.toString(joinPoint.getArgs()));
         threadInfo.put("args", Arrays.toString(joinPoint.getArgs()));
-        logger.info("USER_AGENT："+request.getHeader("User-Agent"));
+        log.info("USER_AGENT："+request.getHeader("User-Agent"));
         threadInfo.put("userAgent", request.getHeader("User-Agent"));
-        logger.info("执行方法：" + controllerWebLog.name());
+        log.info("执行方法：" + controllerWebLog.name());
         threadInfo.put("methodName", controllerWebLog.name());
         threadLocal.set(threadInfo);
     }
@@ -80,7 +84,7 @@ public class WebLogAspect {
             //insertResult(threadInfo);
         }
         // 处理完请求，返回内容
-        logger.info("RESPONSE : " + ret);
+        log.info("RESPONSE : " + ret);
     }
     /**
      * 获取执行时间
@@ -93,9 +97,11 @@ public class WebLogAspect {
         long startTime = System.currentTimeMillis();
         Object ob = proceedingJoinPoint.proceed();
         Map<String, Object> threadInfo = threadLocal.get();
-        Long takeTime = System.currentTimeMillis() - startTime;
-        threadInfo.put("takeTime", takeTime);
-        logger.info("耗时：" + takeTime);
+        if (!ObjectUtil.isEmpty(threadInfo)){
+            Long takeTime = System.currentTimeMillis() - startTime;
+            threadInfo.put("takeTime", takeTime);
+            log.info("耗时：" + takeTime);
+        }
         threadLocal.set(threadInfo);
         return ob;
     }
@@ -111,7 +117,7 @@ public class WebLogAspect {
 
         HttpServletRequest request = sra.getRequest();
         // 异常信息
-        logger.error("{}接口调用异常，异常信息{}", request.getRequestURI(), throwable);
+        log.error("{}接口调用异常，异常信息{}", request.getRequestURI(), throwable);
     }
 
 }
