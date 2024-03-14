@@ -3,7 +3,6 @@ package com.example.springdemo.Service.Impl.order;
 import cn.hutool.extra.spring.SpringUtil;
 import com.alibaba.fastjson2.JSON;
 import com.alibaba.fastjson2.JSONObject;
-import com.baomidou.dynamic.datasource.annotation.DSTransactional;
 import com.example.commonadvice.tool.SnowflakeIdGenerator;
 import com.example.springdemo.Disposition.OrderDictionary;
 import com.example.springdemo.Entity.OrderInfo.OrderGoods;
@@ -137,7 +136,7 @@ public class OrderTransferServiceImpl implements OrderTransferService {
      * @param tChannel
      * @return
      */
-    @DSTransactional
+    @Transactional
     public boolean orderTransfer(JSONObject order, TChannel tChannel) {
         System.out.println("转单实现");
         ChannelOrderAnalysis orderAnalysis;
