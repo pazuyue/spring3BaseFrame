@@ -4,6 +4,7 @@ import com.example.commonadvice.tool.SnowflakeIdGenerator;
 import com.example.springdemo.Config.Common.Enums.orderPluginEnum;
 import com.example.springdemo.Config.Common.Factory.OrderPluginFactory;
 import com.example.springdemo.Config.RabbitMq.MQProperties;
+import com.example.springdemo.Service.Impl.TestServiceImpl;
 import com.example.springdemo.Service.Message.MessageService;
 import jakarta.annotation.Resource;
 import org.springframework.amqp.core.Message;
@@ -17,6 +18,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.concurrent.Future;
+
 @RestController
 @RequestMapping("/test")
 public class TestController {
@@ -27,6 +30,8 @@ public class TestController {
     private MessageService messageService;
     @Autowired
     private OrderPluginFactory orderPluginFactory;
+    @Resource
+    private TestServiceImpl testService;
 
     @GetMapping(value = "/testSendMessage")
     public ResponseEntity<Object> testSendMessage(){
@@ -58,5 +63,11 @@ public class TestController {
     public  ResponseEntity<Object> testOrderPlugin(){
         boolean execute = orderPluginFactory.getBean(orderPluginEnum.Type.Common).execute();
         return new ResponseEntity<>("successfully", HttpStatus.OK);
+    }
+
+    @GetMapping(value = "/testAsync")
+    public  ResponseEntity<Object> testAsync() throws Exception {
+        Future<String> stringFuture = testService.executeAsyncPlus(1);
+        return new ResponseEntity<>(stringFuture, HttpStatus.OK);
     }
 }
