@@ -7,7 +7,7 @@ import com.github.davidfantasy.mybatisplus.generatorui.mbp.NameConverter;
 public class GeberatorUIServer {
 
     public static void main(String[] args) {
-        GeneratorConfig config = GeneratorConfig.builder().jdbcUrl("jdbc:mysql://localhost:3306/oms_saas_master")
+        GeneratorConfig config = GeneratorConfig.builder().jdbcUrl("jdbc:mysql://localhost:3306/qm_oms_saas_commodity")
                 .userName("root")
                 .password("123456")
                 .driverClassName("com.mysql.cj.jdbc.Driver")
@@ -34,7 +34,7 @@ public class GeberatorUIServer {
                     }
                 })
                 //所有生成的java文件的父包名，后续也可单独在界面上设置
-                .basePackage("com.example.springdemo")
+                .basePackage("com.oms.goods.controller.goods")
                 .port(8068)
                 .build();
         MybatisPlusToolsApplication.run(config);

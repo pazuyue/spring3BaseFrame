@@ -1,6 +1,7 @@
 package com.example.springdemo.Config.RabbitMq;
 
 import jakarta.annotation.PostConstruct;
+import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.core.ReturnedMessage;
 import org.springframework.amqp.rabbit.connection.CorrelationData;
@@ -12,7 +13,7 @@ import org.springframework.stereotype.Component;
 @Slf4j
 public class MyCallBack implements RabbitTemplate.ConfirmCallback,RabbitTemplate.ReturnsCallback {
 
-    @Autowired
+    @Resource
     private RabbitTemplate rabbitTemplate;
 
 
@@ -43,6 +44,6 @@ public class MyCallBack implements RabbitTemplate.ConfirmCallback,RabbitTemplate
      * @param returnedMessage
      */
     public void returnedMessage(ReturnedMessage returnedMessage) {
-        log.error("回退消息{}",returnedMessage);
+        log.error("回退消息{}",returnedMessage.toString());
     }
 }

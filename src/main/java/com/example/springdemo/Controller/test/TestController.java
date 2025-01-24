@@ -42,10 +42,7 @@ public class TestController {
             MessageProperties messageProperties = new MessageProperties();
             messageProperties.setExpiration("15000"); // 过期的毫秒数
             Message message = MessageBuilder.withBody("hello world".getBytes()).andProperties(messageProperties).build();
-
-            CorrelationData correlationData = new CorrelationData(); // 关联数据
-            correlationData.setId("order_123456");
-            messageService.sendMsg(mqProperties.getDefaultExchange(), "yueguangRouteKey", message,correlationData);
+            messageService.sendMsg(mqProperties.getDefaultExchange(), "yueguangRouteKey", message);
             //rabbitTemplate.convertAndSend(mqProperties.getDefaultExchange(), "yueguangRouteKey", message);
         }
         return new ResponseEntity<>("successfully", HttpStatus.OK);

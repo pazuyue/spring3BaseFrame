@@ -15,10 +15,7 @@ import org.springframework.amqp.rabbit.connection.CorrelationData;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @Slf4j
@@ -30,17 +27,22 @@ public class TestQueueController {
     private MessageService messageService;
 
 
-    @GetMapping(value = "/testSendMsg")
+    @PostMapping(value = "/testSendMsg")
     public ResponseEntity<Object> testSendMsg(@RequestParam String msg) {
         MessageProperties messageProperties = new MessageProperties();
         messageProperties.setExpiration("15000"); // 过期的毫秒数
         Message message = MessageBuilder.withBody(msg.getBytes()).andProperties(messageProperties).build();
+        messageService.sendMsg(mqProperties.getDefaultExchange(), "yueguangRouteKey", message);
+        log.info("消息：【" + msg + "】已发送！");
+        return new ResponseEntity<>("updated successfully"+msg, HttpStatus.OK);
+    }
 
-        CorrelationData correlationData = new CorrelationData(); // 关联数据
-        String messageID = IdUtil.simpleUUID();
-        log.info("messageID="+messageID);
-        correlationData.setId(messageID);
-        messageService.sendMsg(mqProperties.getDefaultExchange(), "yueguangRouteKey", message,correlationData);
+    @PostMapping(value = "/testSendMsg2")
+    public ResponseEntity<Object> testSendMsg2(@RequestParam String msg) {
+        MessageProperties messageProperties = new MessageProperties();
+        messageProperties.setExpiration("15000"); // 过期的毫秒数
+        Message message = MessageBuilder.withBody(msg.getBytes()).andProperties(messageProperties).build();
+        messageService.sendMsg(mqProperties.getDeadExchange(), "deadRoutingKey", message);
         log.info("消息：【" + msg + "】已发送！");
         return new ResponseEntity<>("updated successfully"+msg, HttpStatus.OK);
     }

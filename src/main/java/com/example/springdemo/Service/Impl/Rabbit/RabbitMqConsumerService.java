@@ -29,4 +29,16 @@ public class RabbitMqConsumerService {
         Thread.sleep(1000); // 休眠一秒，好看效果
         RabbitMQUtils.askMessage(channel, tag, log);
     }
+
+    @RabbitListener(queues = "deadQueue")
+    public void receiveDeadQueue(String payload, Channel channel, MessageProperties properties, @Header(AmqpHeaders.DELIVERY_TAG) long tag) throws InterruptedException {
+        log.info("死信消费properties：{}", properties);
+        log.info("死信消费channel：{}", channel);
+        String queue = properties.getConsumerQueue();
+        String queueBean = queue+"ServiceImpl";
+        QueueService queueService = SpringUtil.getBean(queueBean);
+        queueService.handle(payload);
+        Thread.sleep(1000); // 休眠一秒，好看效果
+        RabbitMQUtils.askMessage(channel, tag, log);
+    }
 }
