@@ -23,6 +23,7 @@ public class OrderStateMachineConfig extends StateMachineConfigurerAdapter<Order
         states
                 .withStates()
                 .initial(OrderStatus.WAIT_PAYMENT)
+                .end(OrderStatus.FINISH)
                 .states(EnumSet.allOf(OrderStatus.class));
     }
     /**
@@ -36,7 +37,10 @@ public class OrderStateMachineConfig extends StateMachineConfigurerAdapter<Order
                 //支付事件:待支付-》待发货
                 .withExternal().source(OrderStatus.WAIT_PAYMENT).target(OrderStatus.WAIT_DELIVER).event(OrderStatusChangeEvent.PAYED)
                 .and()
+                //取消事件:待支付-》已取消
+                .withExternal().source(OrderStatus.WAIT_PAYMENT).target(OrderStatus.CANCEL).event(OrderStatusChangeEvent.CANCEL)
                 //发货事件:待发货-》待收货
+                .and()
                 .withExternal().source(OrderStatus.WAIT_DELIVER).target(OrderStatus.WAIT_RECEIVE).event(OrderStatusChangeEvent.DELIVERY)
                 .and()
                 //收货事件:待收货-》已完成

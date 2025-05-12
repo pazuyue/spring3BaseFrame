@@ -5,7 +5,8 @@ public enum OrderStatus {
     WAIT_PAYMENT(1, "待支付"),
     WAIT_DELIVER(2, "待发货"),
     WAIT_RECEIVE(3, "待收货"),
-    FINISH(4, "已完成");
+    FINISH(4, "已完成"),
+    CANCEL(5, "已取消");
     private Integer key;
     private String desc;
     OrderStatus(Integer key, String desc) {
